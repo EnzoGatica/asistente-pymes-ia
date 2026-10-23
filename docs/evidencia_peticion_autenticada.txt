@@ -1,0 +1,63 @@
+Evidencia de petición autenticada a la API de OpenAI (dos pruebas con entradas distintas)
+
+Fecha: 2026-10-22T23:30:51
+Método: POST
+Endpoint: https://api.openai.com/v1/chat/completions
+Encabezado de autenticación: Authorization: Bearer <OPENAI_API_KEY desde .env, oculta>
+Cuerpo enviado: {"model": "gpt-4.1-nano", "messages": [{"role": "user", "content": "Hola, confirma en una frase corta que esta petición se autenticó."}]}
+Código de estado: 200 OK
+Respuesta (fragmento):
+{
+  "id": "chatcmpl-EbzLPcKwxa6dGK9Uq1ek8PhU02bDH",
+  "object": "chat.completion",
+  "model": "gpt-4.1-nano-2025-04-14",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "La solicitud ha sido autenticada correctamente.",
+        "refusal": null,
+        "annotations": []
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 21,
+    "completion_tokens": 8,
+    "total_tokens": 29
+  }
+}
+
+---
+
+Fecha: 2026-10-22T23:30:52
+Método: POST
+Endpoint: https://api.openai.com/v1/chat/completions
+Encabezado de autenticación: Authorization: Bearer <OPENAI_API_KEY desde .env, oculta>
+Cuerpo enviado: {"model": "gpt-4.1-nano", "messages": [{"role": "user", "content": "¿Cuál es la capital de la Región del Biobío? Responde en una frase."}]}
+Código de estado: 200 OK
+Respuesta (fragmento):
+{
+  "id": "chatcmpl-EbzLQ6Mn97FPpIjRzaDVlIotyghIm",
+  "object": "chat.completion",
+  "model": "gpt-4.1-nano-2025-04-14",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "La capital de la Región del Biobío es Concepción.",
+        "refusal": null,
+        "annotations": []
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 26,
+    "completion_tokens": 13,
+    "total_tokens": 39
+  }
+}
