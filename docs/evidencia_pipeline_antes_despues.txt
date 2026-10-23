@@ -1,0 +1,18 @@
+[Caso 1] Consulta: ¿Qué es una pyme?
+[Caso 1] Referencia: Una pyme es una pequeña y mediana empresa.
+[Caso 1] Respuesta: Una pyme es una pequeña y mediana empresa.
+[Caso 1] Coincidencia texto crudo: 100.0%
+[Caso 1] Coincidencia texto procesado: 100.0%
+
+[Caso 2] Consulta: ¿Cuál es la capital de la Región del Biobío?
+[Caso 2] Referencia: La capital de la Región del Biobío es Concepción.
+[Caso 2] Respuesta: La capital de la Región del Biobío es Concepción.
+[Caso 2] Coincidencia texto crudo: 100.0%
+[Caso 2] Coincidencia texto procesado: 100.0%
+
+[Caso 3] Consulta: ¿Qué es una boleta electrónica en Chile?
+[Caso 3] Referencia: La boleta electrónica es un documento tributario emitido al consumidor final y enviado al SII.
+[Caso 3] Respuesta: Es un documento digital que reemplaza a la boleta física y cumple con requisitos legales para acreditar una venta o servicio en Chile.
+[Caso 3] Coincidencia texto crudo: 28.6%
+[Caso 3] Coincidencia texto procesado: 42.9%
+
