@@ -13,3 +13,21 @@ SISTEMA_ASISTENTE = (
     "Eres el asistente de atención al cliente de esta panadería. Responde en una o dos frases, en español "
     "de Chile, usando solo la información de la ficha. Si la ficha no tiene el dato, dilo.\n\n" + FICHA_NEGOCIO
 )
+
+# Los mismos datos de la ficha, en forma estructurada para las herramientas del agente.
+PRECIOS = {
+    "marraqueta": (2200, "kilo"),
+    "hallulla": (2400, "kilo"),
+    "pan amasado": (600, "unidad"),
+    "empanada de pino": (2500, "unidad"),
+    "torta 15 personas": (22000, "unidad"),
+    "torta 30 personas": (38000, "unidad"),
+}
+DESPACHO = {"tome": 2000, "dichato": 3500}
+
+PEDIDOS = {
+    "P-1001": {"estado": "en preparación", "total": 6800,
+               "historial": ["recibido 21-10 18:05", "pagado por transferencia 21-10 18:20", "en preparación 22-10 07:30"]},
+    "P-1002": {"estado": "entregado", "total": 41500,
+               "historial": ["recibido 19-10 10:12", "pagado 19-10 10:40", "despachado a Dichato 21-10 15:00", "entregado 21-10 16:10"]},
+}
