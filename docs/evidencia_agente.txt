@@ -1,0 +1,36 @@
+D:\Proyectos\asistente-pymes-ia\src\agente.py:183: LangChainDeprecationWarning: RunnableWithMessageHistory is deprecated. Use LangGraph's built-in persistence instead.
+  agente = construir_agente_con_memoria(construir_ejecutor(ChatOpenAI(model=MODELO, temperature=0)))
+D:\Proyectos\asistente-pymes-ia\src\agente.py:148: LangChainDeprecationWarning: The class `InMemoryChatMessageHistory` was deprecated in LangChain 1.6.4 and will be removed in 2.0.0 See the short-term memory documentation for recommended alternatives: https://docs.langchain.com/oss/python/langchain/short-term-memory
+  historiales[session_id] = InMemoryChatMessageHistory()
+[cliente_1] ¿Cuánto vale el kilo de hallulla?
+  herramientas: consultar_precio
+  respuesta: El kilo de hallulla cuesta $2400.
+
+[cliente_1] Ok, ¿y cuánto me saldrían 3 kilos con despacho a Dichato?
+  herramientas: calcular_total_pedido
+  respuesta: El total por 3 kilos de hallulla con despacho a Dichato sería de $10.700.
+
+[cliente_2] ¿Cómo va mi pedido P-1002? Quiero el historial completo.
+  herramientas: consultar_estado_pedido
+  respuesta: Tu pedido P-1002 fue entregado el 21 de octubre a las 16:10.
+
+[cliente_2] ¿Y ese pedido a qué hora se entregó?
+  herramientas: consultar_estado_pedido
+  respuesta: El pedido P-1002 se entregó a las 16:10 del 21 de octubre.
+
+[cliente_3] ¿De qué pedido te pregunté recién?
+  herramientas: (ninguna)
+  respuesta: No me has proporcionado un número de pedido, por lo que no puedo consultar el estado de ningún pedido reciente. ¿Podrías darme el número de pedido para ayudarte mejor?
+
+[cliente_4] ¿Dónde queda el local?
+  herramientas: (ninguna)
+  respuesta: El local de la Panadería La Espiga está en Egaña 1450, Tomé.
+
+[cliente_5] La torta del pedido P-1002 llegó aplastada, quiero que me devuelvan $10000.
+  herramientas: (ninguna)
+  respuesta: ¿Podrías confirmar si deseas que gestione un reembolso por ese monto? Necesitaré tu autorización para proceder.
+
+Reembolso de $10000 para el pedido P-1002. ¿Aprobar? (s/n): [cliente_5] Sí, confirmo: pedido P-1002, reembolso de $10000.
+  herramientas: generar_reembolso
+  respuesta: El reembolso de $10,000 para el pedido P-1002 ha sido aprobado y procesado.
+
