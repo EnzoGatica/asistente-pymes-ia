@@ -1,0 +1,36 @@
+Pregunta: ¿Hasta qué hora puedo pedir para que el despacho salga a las 17:00?
+Citas: {1: 'despacho.md', 2: 'horarios.md', 3: 'despacho.md'}
+Respuesta: Puedes hacer tu pedido antes de las 16:00 para que salga en el despacho de las 17:00 [1].
+
+Pregunta: ¿La hallulla tiene grasa animal?
+Citas: {1: 'ingredientes_alergenos.md', 2: 'productos_precios.md', 3: 'ingredientes_alergenos.md'}
+Respuesta: No, la hallulla se hace con manteca vegetal, sin grasa animal [1].
+
+Pregunta: ¿Tienen estacionamiento para clientes?
+Citas: {1: 'medios_pago.md', 2: 'horarios.md', 3: 'reclamos_devoluciones.md'}
+Respuesta: El contexto proporcionado no menciona si cuentan con estacionamiento para clientes, por lo que no puedo responder con certeza basada en la información disponible.
+
+--- Prompt completo de la primera pregunta ---
+Responde la pregunta usando SOLO el contexto de abajo. Cita la fuente de cada afirmacion con su numero entre corchetes, como [1]. Si el contexto no alcanza para responder, dilo explicitamente en vez de inventar.
+
+Contexto:
+[1] # Despacho a domicilio
+
+Despachamos solo a Tomé ($2.000) y a Dichato ($3.500). No despachamos a Penco, Lirquén, Coliumo ni Concepción; en esos casos el cliente puede retirar en el local.
+
+Los despachos salen a las 11:00 y a las 17:00. Un pedido hecho antes de las 10:00 sale en el despacho de las 11:00; uno hecho antes de las 16:00 sale en el de las 17:00. Los domingos no hay despacho.
+
+[2] En feriados irrenunciables (1 de enero, 1 de mayo, 18 y 19 de septiembre, 25 de diciembre) el local permanece cerrado. El resto de los feriados atendemos con horario de domingo, de 9:00 a 14:00.
+
+El pan sale del horno tres veces al día: a las 7:30, a las 12:30 y a las 18:00. Si busca marraqueta caliente, esas son las mejores horas para venir.
+
+[3] Pedidos sobre $30.000 tienen despacho gratis dentro de Tomé (no aplica a Dichato).
+
+Pregunta: ¿Hasta qué hora puedo pedir para que el despacho salga a las 17:00?
+
+Respuesta:
+
+--- Verificación manual de una cita ---
+Pregunta 1, cita [1] -> despacho.md. El archivo corpus/despacho.md dice: "uno hecho antes de las 16:00 sale en el de las 17:00". La respuesta es correcta y la cita apunta a la fuente real.
+Pregunta 3 (sin respuesta en el corpus): el modelo dijo explícitamente que el contexto no menciona estacionamiento, sin inventar.
+El contexto recuperado cambia entre preguntas (despacho.md / ingredientes_alergenos.md / medios_pago.md como primer resultado).
