@@ -1,3 +1,4 @@
+import json
 import os
 import requests
 from dotenv import load_dotenv
@@ -14,13 +15,18 @@ PRECIOS = {
 }
 
 
-def armar_peticion(pregunta, modelo=MODELO):
+def armar_peticion(pregunta, system_instruction=None, response_schema=None, modelo=MODELO):
     if not pregunta or not pregunta.strip():
         raise ValueError("La pregunta no puede estar vacía.")
-    body = {
-        "model": modelo,
-        "messages": [{"role": "user", "content": pregunta}],
-    }
+    mensajes = [{"role": "user", "content": pregunta}]
+    if system_instruction:
+        mensajes.insert(0, {"role": "system", "content": system_instruction})
+    body = {"model": modelo, "messages": mensajes}
+    if response_schema:
+        body["response_format"] = {
+            "type": "json_schema",
+            "json_schema": {"name": "salida", "schema": response_schema, "strict": True},
+        }
     return URL_CHAT, body
 
 
@@ -48,6 +54,17 @@ def extraer_texto(datos):
         return datos["choices"][0]["message"]["content"]
     except (KeyError, IndexError, TypeError):
         raise RuntimeError("La respuesta no trae el texto generado en choices[0].message.content.")
+
+
+def parsear_respuesta_json(texto):
+    limpio = texto.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+    try:
+        datos = json.loads(limpio)
+    except json.JSONDecodeError:
+        raise ValueError("La respuesta del modelo no es un JSON válido.")
+    if not isinstance(datos, dict):
+        raise ValueError("La respuesta no tiene la estructura esperada (se esperaba un objeto JSON).")
+    return datos
 
 
 def calcular_costo(datos, modelo=MODELO):

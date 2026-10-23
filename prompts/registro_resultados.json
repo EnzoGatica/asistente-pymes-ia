@@ -1,0 +1,17 @@
+{
+  "clasificar_consulta": {
+    "exitos": 3,
+    "intentos": 3,
+    "ultima_salida": "{\"categoria\":\"reclamo\",\"urgencia\":3}"
+  },
+  "extraer_datos_pedido": {
+    "exitos": 3,
+    "intentos": 3,
+    "ultima_salida": "{\"producto\":\"tortas de mil hojas\",\"cantidad\":2,\"fecha_entrega\":\"sábado 7\",\"comuna\":\"Dichato\"}"
+  },
+  "responder_cliente": {
+    "exitos": 3,
+    "intentos": 3,
+    "ultima_salida": "{\"respuesta\": \"Nuestro horario es de 8:00 a 20:00 de lunes a sábado, y despachamos solo a Tomé y Dichato.\", \"requiere_humano\": false}"
+  }
+}
