@@ -14,11 +14,11 @@ PRECIOS = {
 }
 
 
-def armar_peticion(pregunta):
+def armar_peticion(pregunta, modelo=MODELO):
     if not pregunta or not pregunta.strip():
         raise ValueError("La pregunta no puede estar vacía.")
     body = {
-        "model": MODELO,
+        "model": modelo,
         "messages": [{"role": "user", "content": pregunta}],
     }
     return URL_CHAT, body
