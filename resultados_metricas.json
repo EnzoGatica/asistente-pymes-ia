@@ -1,0 +1,162 @@
+[
+  {
+    "consulta": "¿A qué hora abren el lunes?",
+    "referencia": "El lunes abrimos a las 8:00 y cerramos a las 20:00.",
+    "respuesta": "Abren a las 8:00 de la mañana los lunes.",
+    "precision": 0.5,
+    "cobertura": 0.38,
+    "f1": 0.43
+  },
+  {
+    "consulta": "¿Atienden el domingo?",
+    "referencia": "Sí, el domingo atendemos de 9:00 a 14:00.",
+    "respuesta": "Sí, atendemos los domingos de 9:00 a 14:00.",
+    "precision": 0.8,
+    "cobertura": 0.8,
+    "f1": 0.8
+  },
+  {
+    "consulta": "¿Cuánto vale el kilo de marraqueta?",
+    "referencia": "El kilo de marraqueta cuesta $2.200.",
+    "respuesta": "El kilo de marraqueta cuesta $2.200.",
+    "precision": 1.0,
+    "cobertura": 1.0,
+    "f1": 1.0
+  },
+  {
+    "consulta": "¿Precio de la hallulla?",
+    "referencia": "La hallulla cuesta $2.400 el kilo.",
+    "respuesta": "La hallulla cuesta $2.400 el kilo.",
+    "precision": 1.0,
+    "cobertura": 1.0,
+    "f1": 1.0
+  },
+  {
+    "consulta": "¿Cuánto sale un pan amasado?",
+    "referencia": "El pan amasado cuesta $600 la unidad.",
+    "respuesta": "Un pan amasado cuesta $600 la unidad.",
+    "precision": 0.86,
+    "cobertura": 0.86,
+    "f1": 0.86
+  },
+  {
+    "consulta": "¿Tienen empanadas de pino? ¿A cuánto?",
+    "referencia": "Sí, la empanada de pino cuesta $2.500.",
+    "respuesta": "Sí, tenemos empanadas de pino por $2.500.",
+    "precision": 0.62,
+    "cobertura": 0.62,
+    "f1": 0.62
+  },
+  {
+    "consulta": "Quiero una torta para 30 personas, ¿cuánto sale?",
+    "referencia": "La torta de mil hojas para 30 personas cuesta $38.000.",
+    "respuesta": "La torta para 30 personas cuesta $38.000 y debe encargarse con 48 horas de anticipación.",
+    "precision": 0.56,
+    "cobertura": 0.82,
+    "f1": 0.67
+  },
+  {
+    "consulta": "¿Cuánto cuesta la torta para 15 personas?",
+    "referencia": "La torta de mil hojas para 15 personas cuesta $22.000.",
+    "respuesta": "La torta de mil hojas para 15 personas cuesta $22.000.",
+    "precision": 1.0,
+    "cobertura": 1.0,
+    "f1": 1.0
+  },
+  {
+    "consulta": "¿Con cuánta anticipación encargo una torta?",
+    "referencia": "Las tortas se encargan con 48 horas de anticipación.",
+    "respuesta": "Las tortas se encargan con 48 horas de anticipación.",
+    "precision": 1.0,
+    "cobertura": 1.0,
+    "f1": 1.0
+  },
+  {
+    "consulta": "¿Despachan a Dichato?",
+    "referencia": "Sí, despachamos a Dichato por $3.500.",
+    "respuesta": "Sí, hacemos despacho a domicilio a Dichato por $3.500.",
+    "precision": 0.6,
+    "cobertura": 0.86,
+    "f1": 0.71
+  },
+  {
+    "consulta": "¿Cuánto cobran por despacho dentro de Tomé?",
+    "referencia": "El despacho en Tomé cuesta $2.000.",
+    "respuesta": "Cobran $2.000 por despacho a domicilio en Tomé.",
+    "precision": 0.56,
+    "cobertura": 0.71,
+    "f1": 0.63
+  },
+  {
+    "consulta": "¿Hacen despacho a Penco?",
+    "referencia": "No, solo despachamos a Tomé y Dichato.",
+    "respuesta": "No, solo hacemos despacho a Tomé y Dichato.",
+    "precision": 0.75,
+    "cobertura": 0.86,
+    "f1": 0.8
+  },
+  {
+    "consulta": "¿Puedo pagar con tarjeta de crédito?",
+    "referencia": "Sí, aceptamos efectivo, débito, crédito y transferencia.",
+    "respuesta": "Sí, aceptamos pago con tarjeta de crédito.",
+    "precision": 0.43,
+    "cobertura": 0.43,
+    "f1": 0.43
+  },
+  {
+    "consulta": "¿Aceptan transferencia?",
+    "referencia": "Sí, aceptamos transferencia.",
+    "respuesta": "Sí, aceptamos transferencia como medio de pago.",
+    "precision": 0.43,
+    "cobertura": 1.0,
+    "f1": 0.6
+  },
+  {
+    "consulta": "¿Dan boleta?",
+    "referencia": "Sí, emitimos boleta electrónica.",
+    "respuesta": "Sí, emitimos boleta electrónica.",
+    "precision": 1.0,
+    "cobertura": 1.0,
+    "f1": 1.0
+  },
+  {
+    "consulta": "¿Dónde están ubicados?",
+    "referencia": "Estamos en calle Egaña 1450, Tomé.",
+    "respuesta": "Estamos en la calle Egaña 1450, en Tomé.",
+    "precision": 0.75,
+    "cobertura": 1.0,
+    "f1": 0.86
+  },
+  {
+    "consulta": "¿Cuál es su WhatsApp?",
+    "referencia": "Nuestro WhatsApp es +56 9 1234 5678.",
+    "respuesta": "Nuestro WhatsApp es +56 9 1234 5678.",
+    "precision": 1.0,
+    "cobertura": 1.0,
+    "f1": 1.0
+  },
+  {
+    "consulta": "¿Venden pan sin gluten?",
+    "referencia": "La ficha no tiene información sobre pan sin gluten.",
+    "respuesta": "Lo siento, no tengo información sobre pan sin gluten en nuestra panadería.",
+    "precision": 0.5,
+    "cobertura": 0.67,
+    "f1": 0.57
+  },
+  {
+    "consulta": "¿Hasta qué hora atienden el sábado?",
+    "referencia": "El sábado atendemos hasta las 20:00.",
+    "respuesta": "Atendemos hasta las 20:00 horas el sábado.",
+    "precision": 0.88,
+    "cobertura": 1.0,
+    "f1": 0.93
+  },
+  {
+    "consulta": "¿Tienen estacionamiento?",
+    "referencia": "No tengo información sobre estacionamiento.",
+    "respuesta": "Lo siento, no tengo esa información.",
+    "precision": 0.5,
+    "cobertura": 0.6,
+    "f1": 0.55
+  }
+]
