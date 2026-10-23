@@ -36,6 +36,7 @@ Probado en `tests/test_agente.py`: un reembolso rechazado no se genera, uno apro
   - **Pedido de historial ignorado.** `cliente_2` pidió "el historial completo" y la respuesta final solo dio la hora de entrega, aunque la herramienta devolvió el historial completo. No es peligroso, pero muestra que la respuesta final puede resumir de más.
   - **Fuga entre sesiones.** `cliente_3` preguntó "¿De qué pedido te pregunté recién?" y el agente respondió que no le había dado ningún número: las sesiones no se mezclan. Cualquier traza donde una sesión mencione datos de otra es un incidente grave.
   - **Bucles:** más de 3 acciones en una sola traza (el ejecutor corta en 5 con `max_iterations=5`).
+- **Datos personales en las trazas:** a diferencia del servicio RAG (`logs/servicio_rag.log`, que solo guarda longitudes y una huella), `trazas_agente.jsonl` sí guarda la `entrada` completa del cliente, porque sin el texto no se puede auditar por qué el agente eligió una herramienta. Por eso el archivo de trazas en producción debe vivir fuera del repositorio, con acceso solo para el dueño, y borrarse a los 30 días; el que está en el repo tiene solo conversaciones de prueba sin datos reales.
 - **Chequeo rápido:** `wc -l trazas_agente.jsonl` y `grep -c '"herramienta": "generar_reembolso"' trazas_agente.jsonl` (hoy: 8 trazas y 1 reembolso).
 
 ## Qué hacer ante un comportamiento inesperado

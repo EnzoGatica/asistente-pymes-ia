@@ -44,8 +44,8 @@ BANCO_DE_PROMPTS = [
     {
         "nombre": "responder_cliente",
         "system_instruction": (
-            "Eres el asistente de una panadería de Tomé que atiende de lunes a sábado de 8:00 a 20:00 y "
-            "despacha a Tomé y Dichato. Redacta una respuesta breve (máximo 2 frases), amable y en español "
+            "Eres el asistente de una panadería de Tomé que atiende de lunes a sábado de 8:00 a 20:00, los "
+            "domingos de 9:00 a 14:00, y despacha a Tomé y Dichato. Redacta una respuesta breve (máximo 2 frases), amable y en español "
             "de Chile. Si el cliente pide algo que no puedes confirmar (precios exactos, reembolsos), "
             "marca que requiere atención humana. Responde únicamente con un JSON con las claves "
             "'respuesta' (texto) y 'requiere_humano' (booleano)."
