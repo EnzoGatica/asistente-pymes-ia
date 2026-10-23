@@ -1,0 +1,19 @@
+Evidencia del cliente modular - 2026-10-22 23:37
+
+$ Escenario 1: consulta normal
+La capital de Chile es Santiago.
+
+$ Escenario 2: API key inválida (no debe reintentar)
+ValueError: Credencial inválida o sin permiso. Revisa tu OPENAI_API_KEY.
+
+$ Escenario 3a: 40 consultas concurrentes reales para intentar provocar un 429
+40 respuestas recibidas; el límite de la cuenta (tier de pago) no se alcanzó, así que no hubo 429 real.
+
+$ Escenario 3b: proveedor respondiendo 429 en cada intento (simulado con mock, espera de 0 s)
+Intento 1 de 3 falló por límite de uso. Reintentando...
+Intento 2 de 3 falló por límite de uso. Reintentando...
+RuntimeError: El servicio no respondió tras varios intentos. Intenta más tarde.
+
+$ Escenario 3c: 429 en el primer intento y éxito en el segundo (simulado)
+Intento 1 de 3 falló por límite de uso. Reintentando...
+Santiago es la capital de Chile.
