@@ -95,4 +95,6 @@ tests/                       Pruebas unitarias (Módulo 2)
 
 - Fecha: 2026-10-22
 - Procedimiento: `git clone` del remoto en una carpeta nueva, entorno virtual nuevo, `pip install -r requirements.txt`, `.env` creado desde `.env.example`, `python main.py` siguiendo solo este README.
-- Resultado: ver detalle abajo.
+- Entorno: Windows 11, Python 3.14, PowerShell/Git Bash.
+- Encontrado: sin hallazgos. `requirements.txt` completo, `.env.example` presente, `main.py` terminó sin traceback ("Proceso terminado sin errores.").
+- Seguridad: en la copia clonada `git status` no lista `.env`, `git ls-files` solo muestra `.env.example` y `git log --all -- .env` no devuelve commits.
