@@ -165,3 +165,12 @@ vectorstore/, logs/        Generados al correr (fuera de Git)
 - Entorno: Windows 11, Python 3.14, PowerShell/Git Bash.
 - Encontrado: sin hallazgos. `requirements.txt` completo, `.env.example` presente, `main.py` terminó sin traceback ("Proceso terminado sin errores.").
 - Seguridad: en la copia clonada `git status` no lista `.env`, `git ls-files` solo muestra `.env.example` y `git log --all -- .env` no devuelve commits.
+
+## Registro del ensayo de instalación limpia (Gate 2)
+
+- Fecha: 2026-10-22
+- Procedimiento: `git clone` en una carpeta nueva, entorno virtual nuevo, `pip install -r requirements.txt`, `.env` desde `.env.example`, `python verificar_entorno.py`, `python -m pytest`, `python servicio_rag.py`.
+- `verificar_entorno.py` detectó correctamente la llave sin completar ("Pendiente: definir OPENAI_API_KEY") y, ya completa, "Entorno listo para la corrida final".
+- Pruebas: 70 passed. Servicio: índice creado desde cero en la primera corrida (`indice_creado`), dos respuestas con fuente citada, supervisión pausada y rechazada al responder "n", "Proceso terminado sin errores.", exit 0.
+- Hallazgo corregido antes de este ensayo: `cargar_indice` fallaba al crear el índice desde cero (`delete` con lista vacía en Chroma). Lo detectó `tests/test_gate2.py` y se corrigió; el ensayo confirma que un clon nuevo ya no falla.
+- Seguridad: `grep ana.perez logs/servicio_rag.log` sin resultados; `git status` limpio; `git ls-files` solo muestra `.env.example` (ni `.env`, ni `vectorstore/`, ni logs).
