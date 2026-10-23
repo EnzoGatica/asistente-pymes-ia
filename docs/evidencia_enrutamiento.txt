@@ -1,0 +1,12 @@
+Mensaje: Quiero encargar 2 kilos de hallulla para mañana con despacho en Tomé
+Categoría: pedido
+Respuesta: Perfecto, encargo 2 kilos de hallulla a $2.400 el kilo, total $4.800, con despacho en Tomé por $2.000, sumando un total de $6.800. Recuerda que las tortas requieren 48 horas de anticipación. ¿Quieres pagar por transferencia o en efectivo al momento de la entrega?
+
+Mensaje: Compré empanadas ayer y venían frías y con poco pino, muy mala onda
+Categoría: reclamo
+Respuesta: Lamentamos mucho la situación y entendemos su molestia; esa no es nuestra calidad habitual. Nuestro equipo se pondrá en contacto con usted para resolverlo y ofrecerle una pronta solución. Gracias por su confianza y comprensión.
+
+Mensaje: ¿Atienden el domingo en la tarde?
+Categoría: consulta
+Respuesta: Sí, atendemos el domingo de 9:00 a 14:00. ¿Desea alguna otra información o puede ayudarle con un pedido?
+
