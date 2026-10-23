@@ -1,0 +1,8 @@
+{"ts": "2026-10-22T23:52:15", "level": "INFO", "msg": "consulta_recibida", "trace_id": "trace-5ca8ee04", "evento": "consulta_recibida", "pregunta_len": 56, "pregunta_huella": "010bd385"}
+{"ts": "2026-10-22T23:52:15", "level": "WARNING", "msg": "documento_descartado_por_inyeccion", "trace_id": "trace-5ca8ee04", "evento": "documento_descartado_por_inyeccion", "fuente": "resena-cliente-881", "n_patrones": 3}
+{"ts": "2026-10-22T23:52:15", "level": "INFO", "msg": "contexto_filtrado", "trace_id": "trace-5ca8ee04", "evento": "contexto_filtrado", "n_limpios": 1, "n_descartados": 1}
+documentos que llegan al prompt: 1
+{"ts": "2026-10-22T23:52:15", "level": "INFO", "msg": "consumo_llm", "trace_id": "trace-ffcc5f2f", "evento": "consumo_llm", "modelo": "gpt-4.1-nano", "input_tokens": 210, "output_tokens": 18, "total_tokens": 228, "costo_usd": 2.82e-05}
+{"ts": "2026-10-22T23:52:15", "level": "INFO", "msg": "consulta_recibida", "trace_id": "trace-666eb07c", "evento": "consulta_recibida", "pregunta_len": 10}
+{"ts": "2026-10-22T23:52:15", "level": "INFO", "msg": "consulta_recibida", "trace_id": "trace-f5e965b2", "evento": "consulta_recibida", "pregunta_len": 20}
+trace_id distintos por consulta: True
