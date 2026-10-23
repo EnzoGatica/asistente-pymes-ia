@@ -1,0 +1,10 @@
+Evidencia de manejo de errores - 2026-10-22 23:32 - salida de consola de las pruebas provocadas una por una
+
+$ Prueba 1: credencial inválida
+No se pudo completar la operación: El servicio respondió con error 401: Incorrect API key provided: sk-llave*****lida. You can find your API key at https://platform.openai.com/account/api-keys.
+$ Prueba 2: entrada vacía
+No se pudo completar la operación: La pregunta no puede estar vacía.
+$ Prueba 3: servicio inaccesible (host inexistente)
+No se pudo completar la operación: No se pudo conectar con el servicio. Intenta de nuevo en unos segundos.
+$ Prueba 4: entrada válida
+La conexión funciona correctamente.

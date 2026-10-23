@@ -9,6 +9,8 @@ MODELO = "gpt-4.1-nano"
 
 
 def armar_peticion(pregunta):
+    if not pregunta or not pregunta.strip():
+        raise ValueError("La pregunta no puede estar vacía.")
     body = {
         "model": MODELO,
         "messages": [{"role": "user", "content": pregunta}],
@@ -17,13 +19,29 @@ def armar_peticion(pregunta):
 
 
 def enviar_peticion(url, body):
-    headers = {"Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}"}
-    respuesta = requests.post(url, headers=headers, json=body)
-    return respuesta.json()
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise RuntimeError("Falta OPENAI_API_KEY: copia .env.example como .env y completa tu llave.")
+    headers = {"Authorization": f"Bearer {api_key}"}
+    try:
+        respuesta = requests.post(url, headers=headers, json=body, timeout=30)
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+        raise RuntimeError("No se pudo conectar con el servicio. Intenta de nuevo en unos segundos.")
+    try:
+        datos = respuesta.json()
+    except requests.exceptions.JSONDecodeError:
+        raise RuntimeError("La respuesta del servicio no llegó en el formato esperado (no es JSON).")
+    if respuesta.status_code != 200:
+        mensaje = datos.get("error", {}).get("message", "sin detalle")
+        raise RuntimeError(f"El servicio respondió con error {respuesta.status_code}: {mensaje}")
+    return datos
 
 
 def extraer_texto(datos):
-    return datos["choices"][0]["message"]["content"]
+    try:
+        return datos["choices"][0]["message"]["content"]
+    except (KeyError, IndexError, TypeError):
+        raise RuntimeError("La respuesta no trae el texto generado en choices[0].message.content.")
 
 
 def obtener_respuesta(pregunta):
@@ -33,4 +51,7 @@ def obtener_respuesta(pregunta):
 
 
 if __name__ == "__main__":
-    print(obtener_respuesta("Confirma en una frase corta que esta conexión funciona"))
+    try:
+        print(obtener_respuesta("Confirma en una frase corta que esta conexión funciona"))
+    except (ValueError, RuntimeError) as error:
+        print("No se pudo completar la operación:", error)
