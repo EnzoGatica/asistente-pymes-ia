@@ -1,0 +1,17 @@
+Fecha: 2026-10-22
+Configuracion: k=1, chunk_size=400, chunk_overlap=60, embeddings=text-embedding-3-small
+
+0.00 0.00 ¿A qué hora abren los domingos?  ->  horarios.md#2
+1.00 1.00 ¿Atienden el 18 de septiembre?  ->  horarios.md#2
+1.00 1.00 ¿A qué hora sale el pan calentito del horno?  ->  horarios.md#2
+1.00 1.00 ¿Cuánto vale el kilo de marraqueta?  ->  productos_precios.md#1
+1.00 1.00 ¿Qué días hay empanadas de mariscos?  ->  productos_precios.md#1
+1.00 1.00 ¿Cuánto cuesta una torta selva negra para 30 personas?  ->  tortas_encargos.md#1
+1.00 1.00 ¿Con cuántos días de anticipación encargo una torta para 50 personas?  ->  tortas_encargos.md#2
+1.00 1.00 ¿Despachan a Penco?  ->  despacho.md#1
+1.00 1.00 ¿El despacho es gratis si compro mucho?  ->  despacho.md#2
+1.00 1.00 ¿Me pueden dar factura para mi empresa?  ->  medios_pago.md#2
+1.00 0.50 Me llegó el pan en mal estado, ¿qué hago?  ->  reclamos_devoluciones.md#2
+1.00 1.00 ¿Tienen pan sin gluten para celíacos?  ->  ingredientes_alergenos.md#1
+
+promedio -> precision: 0.917 recall: 0.875

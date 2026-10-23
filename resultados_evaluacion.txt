@@ -1,0 +1,17 @@
+Fecha: 2026-10-22
+Configuracion: k=3, chunk_size=400, chunk_overlap=60, embeddings=text-embedding-3-small
+
+0.33 1.00 ¿A qué hora abren los domingos?  ->  horarios.md#2, horarios.md#1, despacho.md#1
+0.33 1.00 ¿Atienden el 18 de septiembre?  ->  horarios.md#2, horarios.md#1, medios_pago.md#1
+0.33 1.00 ¿A qué hora sale el pan calentito del horno?  ->  horarios.md#2, horarios.md#1, productos_precios.md#1
+0.33 1.00 ¿Cuánto vale el kilo de marraqueta?  ->  productos_precios.md#1, ingredientes_alergenos.md#2, tortas_encargos.md#1
+0.33 1.00 ¿Qué días hay empanadas de mariscos?  ->  productos_precios.md#1, horarios.md#2, ingredientes_alergenos.md#2
+0.33 1.00 ¿Cuánto cuesta una torta selva negra para 30 personas?  ->  tortas_encargos.md#1, tortas_encargos.md#2, reclamos_devoluciones.md#2
+0.33 1.00 ¿Con cuántos días de anticipación encargo una torta para 50 personas?  ->  tortas_encargos.md#2, tortas_encargos.md#1, reclamos_devoluciones.md#2
+0.33 1.00 ¿Despachan a Penco?  ->  despacho.md#1, despacho.md#2, productos_precios.md#1
+0.33 1.00 ¿El despacho es gratis si compro mucho?  ->  despacho.md#2, despacho.md#1, reclamos_devoluciones.md#2
+0.33 1.00 ¿Me pueden dar factura para mi empresa?  ->  medios_pago.md#2, reclamos_devoluciones.md#2, tortas_encargos.md#1
+0.67 1.00 Me llegó el pan en mal estado, ¿qué hago?  ->  reclamos_devoluciones.md#2, reclamos_devoluciones.md#1, productos_precios.md#1
+0.33 1.00 ¿Tienen pan sin gluten para celíacos?  ->  ingredientes_alergenos.md#1, ingredientes_alergenos.md#2, sobre_nosotros.md#1
+
+promedio -> precision: 0.361 recall: 1.000
