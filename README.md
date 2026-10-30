@@ -9,6 +9,42 @@ Modelo: OpenAI `gpt-4.1-nano` (ver [decisión de modelo](docs/decision-arquitect
 
 Proyecto de la Especialización en Desarrollo con IA Generativa (Accenture · Skillnest), construido bloque a bloque sobre la plantilla base del programa.
 
+## Entregas por bloque
+
+Cada actividad, con el archivo que la responde y el commit en que se entregó.
+
+| Bloque | Actividad | Archivo entregado | Commit |
+|---|---|---|---|
+| 2 | Inicializa tu repositorio y primer commit | [`.gitignore`](.gitignore), [`.env.example`](.env.example) | [b3c3f32](https://github.com/EnzoGatica/asistente-pymes-ia/commit/b3c3f32) |
+| 3 | Réplica del setup completo | [`requirements.txt`](requirements.txt) | [844f90d](https://github.com/EnzoGatica/asistente-pymes-ia/commit/844f90d) |
+| 4 | Primera petición autenticada | [`docs/evidencia_peticion_autenticada.txt`](docs/evidencia_peticion_autenticada.txt) | [e546b25](https://github.com/EnzoGatica/asistente-pymes-ia/commit/e546b25) |
+| 5 | Módulo Python de consumo de servicios | [`src/consumir_openai.py`](src/consumir_openai.py) | [e88c8f1](https://github.com/EnzoGatica/asistente-pymes-ia/commit/e88c8f1) |
+| 6 | Script refactorizado en funciones | [`src/consumir_openai.py`](src/consumir_openai.py) | [c4ab1b9](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c4ab1b9) |
+| 7 | Excepciones y validación | [`docs/evidencia_manejo_errores.txt`](docs/evidencia_manejo_errores.txt) | [ebd0443](https://github.com/EnzoGatica/asistente-pymes-ia/commit/ebd0443) |
+| 8 | Diagrama de arquitectura | [`docs/diagrama_arquitectura.png`](docs/diagrama_arquitectura.png) | [c3f9c9e](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c3f9c9e) |
+| 9 | Decisión de arquitectura (elección de modelo) | [`docs/decision-arquitectura.md`](docs/decision-arquitectura.md), [`src/comparar_modelos.py`](src/comparar_modelos.py) | [8553030](https://github.com/EnzoGatica/asistente-pymes-ia/commit/8553030) |
+| 10 | Banco de prompts y consistencia | [`prompts/banco.py`](prompts/banco.py), [`prompts/registro_resultados.json`](prompts/registro_resultados.json) | [0fdd4de](https://github.com/EnzoGatica/asistente-pymes-ia/commit/0fdd4de) |
+| 11 | **Gate 1** - Habilitación técnica | [`main.py`](main.py), este README | [1e9a02f](https://github.com/EnzoGatica/asistente-pymes-ia/commit/1e9a02f) |
+| 12 | Cliente modular con reintentos | [`src/cliente.py`](src/cliente.py), [`docs/evidencia_cliente_modular.txt`](docs/evidencia_cliente_modular.txt) | [c27d200](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c27d200) |
+| 13 | Rate limits, backoff y costo por operación | [`docs/evidencia_registro_costos.txt`](docs/evidencia_registro_costos.txt) | [b6883c5](https://github.com/EnzoGatica/asistente-pymes-ia/commit/b6883c5) |
+| 14 | Pruebas unitarias del cliente | [`tests/test_cliente.py`](tests/test_cliente.py) | [2e8d282](https://github.com/EnzoGatica/asistente-pymes-ia/commit/2e8d282) |
+| 15 | Pipeline de procesamiento de texto | [`src/pipeline_texto.py`](src/pipeline_texto.py), [`docs/evidencia_pipeline_antes_despues.txt`](docs/evidencia_pipeline_antes_despues.txt) | [b3b3f20](https://github.com/EnzoGatica/asistente-pymes-ia/commit/b3b3f20) |
+| 16 | Métricas sobre las salidas del cliente | [`src/pipeline_texto.py`](src/pipeline_texto.py), [`resultados_metricas.json`](resultados_metricas.json) | [c1c5463](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c1c5463) |
+| 17 | Interpretación y límites del pipeline | [`docs/limites_metrica.md`](docs/limites_metrica.md) | [8c1ebd4](https://github.com/EnzoGatica/asistente-pymes-ia/commit/8c1ebd4) |
+| 18 | Chain de tres pasos | [`src/cadena_tres_pasos.py`](src/cadena_tres_pasos.py) | [193cad8](https://github.com/EnzoGatica/asistente-pymes-ia/commit/193cad8) |
+| 19-20 | Enrutamiento condicional y chain de extremo a extremo | [`src/enrutamiento.py`](src/enrutamiento.py), [`docs/evidencia_enrutamiento.txt`](docs/evidencia_enrutamiento.txt) | [71543f0](https://github.com/EnzoGatica/asistente-pymes-ia/commit/71543f0) |
+| 21-22 | Agente con herramientas y herramienta personalizada | [`src/agente.py`](src/agente.py) | [c8f317b](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c8f317b) |
+| 23 | Límites de autonomía del agente | [`docs/limites_autonomia_agente.md`](docs/limites_autonomia_agente.md), [`trazas_agente.jsonl`](trazas_agente.jsonl) | [99e4d27](https://github.com/EnzoGatica/asistente-pymes-ia/commit/99e4d27) |
+| 24-25 | Indexación del corpus y persistencia de embeddings | [`src/indexar_corpus.py`](src/indexar_corpus.py), [`corpus/`](corpus) | [32aa1e6](https://github.com/EnzoGatica/asistente-pymes-ia/commit/32aa1e6) |
+| 26 | Recuperación y prompt dinámico con fuente citada | [`src/recuperacion.py`](src/recuperacion.py), [`docs/evidencia_recuperacion.txt`](docs/evidencia_recuperacion.txt) | [8bf31e9](https://github.com/EnzoGatica/asistente-pymes-ia/commit/8bf31e9) |
+| 27 | Evaluación de la recuperación | [`src/evaluacion_recuperacion.py`](src/evaluacion_recuperacion.py), [`resultados_evaluacion.txt`](resultados_evaluacion.txt) | [e5e1811](https://github.com/EnzoGatica/asistente-pymes-ia/commit/e5e1811) |
+| 28 | Latencia y costo del flujo RAG | [`src/registro_rag.py`](src/registro_rag.py), [`registros_latencia_costo.jsonl`](registros_latencia_costo.jsonl) | [3d9363c](https://github.com/EnzoGatica/asistente-pymes-ia/commit/3d9363c) |
+| 29 | Laboratorio de personalización | [`src/dataset_tuning.py`](src/dataset_tuning.py), [`datos/dataset_tuning.jsonl`](datos/dataset_tuning.jsonl) | [46cdf72](https://github.com/EnzoGatica/asistente-pymes-ia/commit/46cdf72) |
+| 30 | Decisión de personalización fundamentada | [`decision_personalizacion.md`](decision_personalizacion.md) | [dd9c4b6](https://github.com/EnzoGatica/asistente-pymes-ia/commit/dd9c4b6) |
+| 31 | Logging estructurado e inyección de prompt | [`src/logging_rag.py`](src/logging_rag.py), [`docs/evidencia_logging_rag.txt`](docs/evidencia_logging_rag.txt) | [a5f5716](https://github.com/EnzoGatica/asistente-pymes-ia/commit/a5f5716) |
+| 32 | Matriz de riesgos y versionado de prompts | [`src/matriz_riesgos.py`](src/matriz_riesgos.py), [`prompts/registro_prompts.json`](prompts/registro_prompts.json), [`docs/evidencia_gobernanza.txt`](docs/evidencia_gobernanza.txt) | [95afb94](https://github.com/EnzoGatica/asistente-pymes-ia/commit/95afb94) |
+| S1 | **Gate 2** - Integración y orquestación | [`servicio_rag.py`](servicio_rag.py), [`tests/test_gate2.py`](tests/test_gate2.py), [`rubrica_gate2.py`](rubrica_gate2.py) | [c2dd433](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c2dd433) |
+
 ## Requisitos
 
 - Python 3.10 o superior (probado con 3.14)
