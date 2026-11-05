@@ -1,0 +1,29 @@
+{
+  "info": {
+    "name": "asistente-pymes-ia - Bloque 4",
+    "description": "Primera petición autenticada (Google Gemini, Interactions API). La llave va en la variable GEMINI_API_KEY; nunca se guarda en este archivo.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "GEMINI_API_KEY", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Primera petición autenticada",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-goog-api-key", "value": "{{GEMINI_API_KEY}}" },
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Api-Revision", "value": "2026-05-20" }
+        ],
+        "url": "https://generativelanguage.googleapis.com/v1beta/interactions",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"gemini-3.5-flash\",\n  \"input\": \"Hola, confirma en una frase corta que esta petición se autenticó.\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    }
+  ]
+}

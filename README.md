@@ -17,7 +17,7 @@ Cada actividad, con el archivo que la responde y el commit en que se entregó.
 |---|---|---|---|
 | 2 | Inicializa tu repositorio y primer commit | [`.gitignore`](.gitignore), [`.env.example`](.env.example) | [b3c3f32](https://github.com/EnzoGatica/asistente-pymes-ia/commit/b3c3f32) |
 | 3 | Réplica del setup completo | [`requirements.txt`](requirements.txt) | [844f90d](https://github.com/EnzoGatica/asistente-pymes-ia/commit/844f90d) |
-| 4 | Primera petición autenticada | [`docs/evidencia_peticion_autenticada.txt`](docs/evidencia_peticion_autenticada.txt) | [e546b25](https://github.com/EnzoGatica/asistente-pymes-ia/commit/e546b25) |
+| 4 | Primera petición autenticada | [`docs/evidencia_peticion_autenticada.txt`](docs/evidencia_peticion_autenticada.txt), [colección de Postman](docs/primera_peticion.postman_collection.json) y [su ejecución](docs/evidencia_peticion_postman.txt) | [e546b25](https://github.com/EnzoGatica/asistente-pymes-ia/commit/e546b25) |
 | 5 | Módulo Python de consumo de servicios | [`src/consumir_openai.py`](src/consumir_openai.py) | [e88c8f1](https://github.com/EnzoGatica/asistente-pymes-ia/commit/e88c8f1) |
 | 6 | Script refactorizado en funciones | [`src/consumir_openai.py`](src/consumir_openai.py) | [c4ab1b9](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c4ab1b9) |
 | 7 | Excepciones y validación | [`docs/evidencia_manejo_errores.txt`](docs/evidencia_manejo_errores.txt) | [ebd0443](https://github.com/EnzoGatica/asistente-pymes-ia/commit/ebd0443) |

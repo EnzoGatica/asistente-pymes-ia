@@ -1,0 +1,13 @@
+Evidencia de la primera petición autenticada con Postman (colección docs/primera_peticion.postman_collection.json)
+Ejecutada con Newman 6.2.1, el ejecutor de colecciones de Postman por línea de comandos.
+
+Fecha: 2026-11-05T22:05:15Z
+Método: POST
+Endpoint: https://generativelanguage.googleapis.com/v1beta/interactions
+Encabezado de autenticación: x-goog-api-key: <GEMINI_API_KEY desde .env, oculta>
+Cuerpo enviado: { "model": "gemini-3.5-flash", "input": "Hola, confirma en una frase corta que esta petición se autenticó." }
+Código de estado: 200 OK
+Tiempo de respuesta: 3625 ms
+Respuesta generada: Esta petición ha sido autenticada con éxito.
+Tokens: entrada 16 | salida 10 | razonamiento 228
+Id de la interacción: v1_ChdtZjNzYXJua0hfZVF5dE1QenRDMThBZxIXbWYzc2FybmtIX2VReXRNUHp0QzE4QWc
