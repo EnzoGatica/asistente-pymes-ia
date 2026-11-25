@@ -3,13 +3,13 @@
 
 | Dato | Valor |
 |---|---|
-| Fecha | 2026-11-25 19:36 |
-| Commit del código | c6bb8cc (sin cambios) |
+| Fecha | 2026-11-25 19:52 |
+| Commit del código | 655a855 (sin cambios) |
 | Destinos | API http://127.0.0.1:8000 e interfaz http://127.0.0.1:8080 |
 
 Escenarios: 14 de 14 cumplidos
 
-Pruebas automáticas: 106 pasan, 0 fallan
+Pruebas automáticas: 127 pasan, 0 fallan
 
 ## Componentes
 
