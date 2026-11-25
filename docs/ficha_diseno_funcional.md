@@ -29,7 +29,21 @@ Diagrama: docs/diagrama_arquitectura_m3.png (el diagrama del Bloque 8, docs/diag
 - Empaquetado: Docker, con docker compose y corpus/ y vectorstore/ montados como volúmenes.
 
 ## 4. Criterios de aceptación
-[PENDIENTE: se completa en el Bloque 34]
+- CA-01 (RF-01): Al enviar {"pregunta": "¿Despachan a Dichato?"} a POST /consultas, la respuesta HTTP es 200 y el JSON trae los campos "respuesta", "fuentes" y "trace_id".
+- CA-02 (RF-02): Para esa misma pregunta, "fuentes" contiene "despacho.md" y la respuesta menciona el valor de $3.500 que figura en corpus/despacho.md.
+- CA-03 (RF-02): Ante la pregunta "¿Venden cerveza artesanal?", que corpus/ no cubre, la respuesta contiene "No tengo información suficiente" y "fuentes" va vacía.
+- CA-04 (RF-03): GET /pedidos/P-1002 responde 200 con "estado": "entregado".
+- CA-05 (RF-03): GET /pedidos/P-9999 responde 404 y el campo "detail" dice que el pedido no existe.
+- CA-06 (RF-01): POST /consultas con {"pregunta": ""} responde 422 y no se registra ningún evento "consumo_llm" para esa consulta.
+- CA-07 (RNF-01): En las 10 consultas de prueba de tests/consultas_prueba.json, al menos 9 responden en menos de 5 segundos.
+- CA-08 (RNF-02): Tras ejecutar las 10 consultas de prueba, ninguna línea de logs/servicio_rag.log contiene el texto completo de una de esas preguntas.
+- CA-09 (RNF-03): Siguiendo solo el README en un equipo con Docker, "docker compose up" deja POST /consultas respondiendo como en CA-01 en 10 minutos o menos desde el clon del repositorio.
 
 ## 5. Plan de construcción por hitos
-[PENDIENTE: se completa en el Bloque 34]
+Horas disponibles: 20 h
+Margen de imprevistos: 4 h
+- H1 (3 h): Servicio FastAPI con POST /consultas sobre servicio_rag.py. Cubre: RF-01. Se comprueba con: CA-01, CA-06.
+- H2 (1 h): Respuestas con fuentes desde el índice Chroma persistido y fuentes vacías cuando corpus/ no cubre la pregunta. Cubre: RF-02. Se comprueba con: CA-02, CA-03.
+- H3 (1 h): Endpoint GET /pedidos/{codigo} con los pedidos simulados de src/negocio.py. Cubre: RF-03. Se comprueba con: CA-04, CA-05.
+- H4 (3 h): Servicio empaquetado con Dockerfile y docker compose. Cubre: RNF-03. Se comprueba con: CA-09.
+- H5 (6 h): Pruebas, documentación y ensayo de la defensa. Cubre: RNF-01, RNF-02. Se comprueba con: CA-07, CA-08.
