@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
+  </defs>
+  <rect width="1200" height="720" fill="#fff"/>
+  <text x="600" y="34" text-anchor="middle" font-size="22" font-weight="700">Arquitectura del asistente de la Panadería La Espiga (Módulo 3)</text>
+  <text x="600" y="58" text-anchor="middle" font-size="14" fill="#555">Recorrido de una consulta: cliente → FastAPI → Orquestación → Chroma y OpenAI → respuesta con fuentes</text>
+
+  <!-- Frontera del contenedor -->
+  <rect x="250" y="90" width="640" height="560" rx="14" fill="#f7fbff" stroke="#2c7be5" stroke-width="3" stroke-dasharray="12,8"/>
+  <text x="570" y="118" text-anchor="middle" font-size="16" font-weight="700" fill="#2c7be5">Contenedor Docker (frontera) — docker compose</text>
+
+  <!-- Cliente -->
+  <rect x="30" y="250" width="180" height="90" rx="10" fill="#eef2f7" stroke="#34495e" stroke-width="2"/>
+  <text x="120" y="285" text-anchor="middle" font-size="16" font-weight="700">Cliente HTTP</text>
+  <text x="120" y="307" text-anchor="middle" font-size="12">Postman / curl / pruebas</text>
+
+  <!-- FastAPI -->
+  <rect x="300" y="235" width="230" height="120" rx="10" fill="#e8f6ef" stroke="#27ae60" stroke-width="2"/>
+  <text x="415" y="265" text-anchor="middle" font-size="16" font-weight="700">FastAPI (api.py)</text>
+  <text x="415" y="290" text-anchor="middle" font-size="12">POST /consultas</text>
+  <text x="415" y="310" text-anchor="middle" font-size="12">GET /pedidos/{codigo}</text>
+  <text x="415" y="330" text-anchor="middle" font-size="12">valida entrada (422)</text>
+
+  <!-- Orquestación -->
+  <rect x="610" y="215" width="250" height="160" rx="10" fill="#fef5e7" stroke="#e67e22" stroke-width="2"/>
+  <text x="735" y="243" text-anchor="middle" font-size="16" font-weight="700">Orquestación</text>
+  <text x="735" y="265" text-anchor="middle" font-size="12">LangChain: recuperación,</text>
+  <text x="735" y="283" text-anchor="middle" font-size="12">filtro de inyección y citas</text>
+  <text x="735" y="305" text-anchor="middle" font-size="12">LangGraph: aprobación humana</text>
+  <text x="735" y="323" text-anchor="middle" font-size="12">de versiones del prompt</text>
+  <text x="735" y="350" text-anchor="middle" font-size="11" fill="#555">servicio_rag.py</text>
+
+  <!-- Chroma -->
+  <rect x="610" y="450" width="250" height="90" rx="10" fill="#f4ecf7" stroke="#8e44ad" stroke-width="2"/>
+  <text x="735" y="482" text-anchor="middle" font-size="16" font-weight="700">Chroma</text>
+  <text x="735" y="504" text-anchor="middle" font-size="12">vectorstore/ (volumen)</text>
+
+  <!-- corpus -->
+  <rect x="300" y="450" width="230" height="90" rx="10" fill="#fdfefe" stroke="#7f8c8d" stroke-width="2"/>
+  <text x="415" y="482" text-anchor="middle" font-size="16" font-weight="700">corpus/ (volumen)</text>
+  <text x="415" y="504" text-anchor="middle" font-size="12">8 documentos del negocio</text>
+
+  <!-- .env -->
+  <rect x="20" y="575" width="210" height="60" rx="10" fill="#fdecea" stroke="#c0392b" stroke-width="2"/>
+  <text x="125" y="602" text-anchor="middle" font-size="15" font-weight="700">.env (OPENAI_API_KEY)</text>
+  <text x="125" y="622" text-anchor="middle" font-size="11">en el equipo, fuera de la imagen y de Git</text>
+
+  <!-- OpenAI -->
+  <rect x="950" y="235" width="220" height="120" rx="10" fill="#f0f0ff" stroke="#3f3fa0" stroke-width="2"/>
+  <text x="1060" y="268" text-anchor="middle" font-size="16" font-weight="700">OpenAI (API)</text>
+  <text x="1060" y="292" text-anchor="middle" font-size="12">gpt-4.1-nano</text>
+  <text x="1060" y="312" text-anchor="middle" font-size="12">text-embedding-3-small</text>
+
+  <!-- Flechas -->
+  <line x1="210" y1="280" x2="298" y2="280" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <text x="254" y="270" text-anchor="middle" font-size="11">pregunta (JSON)</text>
+  <line x1="298" y1="315" x2="212" y2="315" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <text x="254" y="335" text-anchor="middle" font-size="10">respuesta+fuentes</text>
+
+  <line x1="530" y1="275" x2="608" y2="275" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <text x="569" y="265" text-anchor="middle" font-size="11">pregunta</text>
+  <line x1="608" y1="320" x2="532" y2="320" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <text x="569" y="340" text-anchor="middle" font-size="11">respuesta</text>
+
+  <line x1="860" y1="265" x2="948" y2="265" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <text x="905" y="255" text-anchor="middle" font-size="11">prompt + contexto</text>
+  <line x1="948" y1="325" x2="862" y2="325" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <text x="905" y="345" text-anchor="middle" font-size="11">texto generado</text>
+
+  <line x1="720" y1="377" x2="720" y2="448" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <text x="690" y="420" text-anchor="end" font-size="11">consulta semántica</text>
+  <line x1="760" y1="448" x2="760" y2="377" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <text x="772" y="420" font-size="11">fragmentos con fuente</text>
+
+  <line x1="532" y1="495" x2="608" y2="495" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <text x="570" y="485" text-anchor="middle" font-size="11">indexación</text>
+
+  <line x1="230" y1="600" x2="680" y2="600" stroke="#c0392b" stroke-width="2" stroke-dasharray="6,4"/>
+  <line x1="680" y1="600" x2="680" y2="377" stroke="#c0392b" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#f)"/>
+  <text x="455" y="590" text-anchor="middle" font-size="11" fill="#c0392b">clave de API (env_file al ejecutar)</text>
+</svg>
