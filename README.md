@@ -110,6 +110,16 @@ Verificadores de cada entrega (los que llaman al modelo real necesitan `.env` co
 | `python verificar_stack.py` | El stack de Compose completo (Bloque 38) |
 | `python verificar_entrega.py` | Composición, README, variables, puertos, verificación cruzada y secretos (Bloque 38) |
 | `python verificar_parciales.py` | Plan y pruebas parciales de `docs/pruebas_parciales.md` (Bloque 39) |
+| `python ejecutar_escenarios.py --dos-veces` | Los 14 escenarios de `escenarios.py` contra el stack en marcha (Bloque 40) |
+| `python verificar_ejecucion.py` | Escenarios, bitácora y repetibilidad (Bloque 40) |
+| `python registrar_ejecucion.py` | Escribe la zona automática de `docs/registro_ejecucion.md` (Bloque 41) |
+| `python verificar_registro.py` | Registro de la ejecución: commit vigente, cifras y secretos (Bloque 41) |
+| `python ejecutar_matriz.py --escribir` | Matriz de pruebas en memoria y su registro `docs/matriz_pruebas.md` (Bloque 42) |
+| `python verificar_matriz.py` | Estructura, trazabilidad y vigencia de la matriz (Bloque 42) |
+| `python verificar_mitigaciones.py` | Ataques, sondas de alucinación y fugas con dobles, sin OpenAI (Bloque 43) |
+| `python verificar_riesgos.py` | Matriz de riesgos con su evidencia ejecutada (Bloque 43) |
+| `python verificar_readme.py` | Que este README esté completo y no mienta (Bloque 44) |
+| `python probar_en_frio.py` | Sigue este README en un clon limpio: instala, prueba, arranca y consulta (Bloque 44) |
 
 ### Scripts por bloque (Módulos 1 y 2)
 
@@ -179,7 +189,7 @@ La revisión de un par que siga solo este README se registrará en docs/verifica
 
 ## Entregas por bloque
 
-Cada actividad, con el archivo que la responde y el commit en que se entregó.
+Cada actividad, con el archivo que la responde y el commit en que se entregó. Desde el Bloque 33 es el Módulo 3.
 
 | Bloque | Actividad | Archivo entregado | Commit |
 |---|---|---|---|
@@ -212,6 +222,18 @@ Cada actividad, con el archivo que la responde y el commit en que se entregó.
 | 31 | Logging estructurado e inyección de prompt | [`src/logging_rag.py`](src/logging_rag.py), [`docs/evidencia_logging_rag.txt`](docs/evidencia_logging_rag.txt) | [a5f5716](https://github.com/EnzoGatica/asistente-pymes-ia/commit/a5f5716) |
 | 32 | Matriz de riesgos y versionado de prompts | [`src/matriz_riesgos.py`](src/matriz_riesgos.py), [`prompts/registro_prompts.json`](prompts/registro_prompts.json), [`docs/evidencia_gobernanza.txt`](docs/evidencia_gobernanza.txt) | [95afb94](https://github.com/EnzoGatica/asistente-pymes-ia/commit/95afb94) |
 | S1 | **Gate 2** - Integración y orquestación | [`servicio_rag.py`](servicio_rag.py), [`tests/test_gate2.py`](tests/test_gate2.py), [`rubrica_gate2.py`](rubrica_gate2.py) | [c2dd433](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c2dd433) |
+| 33 | Ficha de diseño funcional, secciones 1 a 3 | [`docs/ficha_diseno_funcional.md`](docs/ficha_diseno_funcional.md), [`docs/diagrama_arquitectura_m3.png`](docs/diagrama_arquitectura_m3.png) | [8c1668c](https://github.com/EnzoGatica/asistente-pymes-ia/commit/8c1668c) |
+| 34 | Criterios de aceptación y plan por hitos | [`docs/ficha_diseno_funcional.md`](docs/ficha_diseno_funcional.md), [`verificar_ficha_completa.py`](verificar_ficha_completa.py) | [89803a6](https://github.com/EnzoGatica/asistente-pymes-ia/commit/89803a6) |
+| 35 | Funcionalidad expuesta con FastAPI | [`servicio/main.py`](servicio/main.py), [`verificar_servicio.py`](verificar_servicio.py) | [e2d9fbc](https://github.com/EnzoGatica/asistente-pymes-ia/commit/e2d9fbc) |
+| 36 | Pruebas de endpoints válidas e inválidas | [`casos.py`](casos.py), [`tests/test_api.py`](tests/test_api.py), [`docs/registro_pruebas.md`](docs/registro_pruebas.md) | [f993f32](https://github.com/EnzoGatica/asistente-pymes-ia/commit/f993f32) |
+| 37 | Imagen de Docker | [`Dockerfile`](Dockerfile), [`verificar_imagen.py`](verificar_imagen.py) | [fbf4f05](https://github.com/EnzoGatica/asistente-pymes-ia/commit/fbf4f05) |
+| 38 | Composición de servicios y procedimiento | [`compose.yaml`](compose.yaml), [`interfaz/main.py`](interfaz/main.py), [`verificar_entrega.py`](verificar_entrega.py) | [9282895](https://github.com/EnzoGatica/asistente-pymes-ia/commit/9282895) |
+| 39 | Pruebas parciales por componente | [`docs/pruebas_parciales.md`](docs/pruebas_parciales.md), [`tests/parciales/test_citas.py`](tests/parciales/test_citas.py) | [3c18b2a](https://github.com/EnzoGatica/asistente-pymes-ia/commit/3c18b2a) |
+| 40 | Ejecución de extremo a extremo | [`escenarios.py`](escenarios.py), [`docs/bitacora_ajustes.md`](docs/bitacora_ajustes.md) | [44c907d](https://github.com/EnzoGatica/asistente-pymes-ia/commit/44c907d) |
+| 41 | Registro de la ejecución completa | [`docs/registro_ejecucion.md`](docs/registro_ejecucion.md) | [eb9ca87](https://github.com/EnzoGatica/asistente-pymes-ia/commit/eb9ca87) |
+| 42 | Matriz de pruebas | [`matriz_pruebas.py`](matriz_pruebas.py), [`docs/matriz_pruebas.md`](docs/matriz_pruebas.md) | [36053f7](https://github.com/EnzoGatica/asistente-pymes-ia/commit/36053f7) |
+| 43 | Matriz de riesgos con mitigaciones verificadas | [`riesgos.py`](riesgos.py), [`docs/matriz_riesgos.md`](docs/matriz_riesgos.md), [`docs/registro_alucinaciones.md`](docs/registro_alucinaciones.md) | [c7cbf49](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c7cbf49) |
+| 44 | README técnico completo | este README, [`verificar_readme.py`](verificar_readme.py), [`docs/diario_de_friccion.md`](docs/diario_de_friccion.md) | este commit |
 
 ## Registro del ensayo de instalación limpia (Gate 1)
 
