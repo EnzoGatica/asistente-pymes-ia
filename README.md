@@ -238,7 +238,7 @@ Cada actividad, con el archivo que la responde y el commit en que se entregó. D
 | 42 | Matriz de pruebas | [`matriz_pruebas.py`](matriz_pruebas.py), [`docs/matriz_pruebas.md`](docs/matriz_pruebas.md) | [36053f7](https://github.com/EnzoGatica/asistente-pymes-ia/commit/36053f7) |
 | 43 | Matriz de riesgos con mitigaciones verificadas | [`riesgos.py`](riesgos.py), [`docs/matriz_riesgos.md`](docs/matriz_riesgos.md), [`docs/registro_alucinaciones.md`](docs/registro_alucinaciones.md) | [c7cbf49](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c7cbf49) |
 | 44 | README técnico completo | este README, [`verificar_readme.py`](verificar_readme.py), [`docs/diario_de_friccion.md`](docs/diario_de_friccion.md) | [f8b09d4](https://github.com/EnzoGatica/asistente-pymes-ia/commit/f8b09d4) |
-| 45 | Decisiones de arquitectura y limitaciones | [`docs/decisiones.md`](docs/decisiones.md), [`docs/limitaciones.md`](docs/limitaciones.md), [`verificar_decisiones.py`](verificar_decisiones.py) | este commit |
+| 45 | Decisiones de arquitectura y limitaciones | [`docs/decisiones.md`](docs/decisiones.md), [`docs/limitaciones.md`](docs/limitaciones.md), [`verificar_decisiones.py`](verificar_decisiones.py) | [39812ce](https://github.com/EnzoGatica/asistente-pymes-ia/commit/39812ce) |
 
 ## Registro del ensayo de instalación limpia (Gate 1)
 
