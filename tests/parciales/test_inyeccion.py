@@ -27,3 +27,11 @@ def test_contrato_cada_fragmento_queda_en_exactamente_una_lista():
     entrada = [LIMPIO, ATAQUE, LIMPIO]
     limpios, descartados = filtrar_documentos_sospechosos(entrada)
     assert len(limpios) + len(descartados) == len(entrada)
+
+
+def test_limitacion_lim_01_orden_disfrazada_no_se_detecta():
+    """Documenta lo que no hace: ver LIM-01 en docs/limitaciones.md."""
+    from ataques import ORDEN_DISFRAZADA
+    from logging_rag import detectar_inyeccion
+
+    assert detectar_inyeccion(ORDEN_DISFRAZADA) == []

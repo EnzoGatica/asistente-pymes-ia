@@ -120,6 +120,7 @@ Verificadores de cada entrega (los que llaman al modelo real necesitan `.env` co
 | `python verificar_riesgos.py` | Matriz de riesgos con su evidencia ejecutada (Bloque 43) |
 | `python verificar_readme.py` | Que este README esté completo y no mienta (Bloque 44) |
 | `python probar_en_frio.py` | Sigue este README en un clon limpio: instala, prueba, arranca y consulta (Bloque 44) |
+| `python verificar_decisiones.py` | Decisiones y limitaciones coherentes con el código y citadas aquí (Bloque 45) |
 
 ### Scripts por bloque (Módulos 1 y 2)
 
@@ -148,20 +149,23 @@ Verificadores de cada entrega (los que llaman al modelo real necesitan `.env` co
 
 ## Decisiones técnicas
 
-- **Modelo `gpt-4.1-mini` de OpenAI.** Se eligió `gpt-4.1-nano` por costo (Bloque 9) y se pasó al respaldo previsto cuando OpenAI lo dio de baja. Detalle en `docs/decision-arquitectura.md`.
-- **RAG sobre `corpus/` con Chroma.** La información del negocio cambia (precios, horarios) y vive en documentos que la dueña puede editar; el índice se actualiza solo con los fragmentos que cambiaron. La comparación con fine-tuning está en `decision_personalizacion.md`.
-- **Si el contexto no alcanza, no se citan fuentes.** Cuando el modelo declara que no tiene la información, el servicio responde un mensaje estándar con "fuentes" vacía en vez de pegar documentos que no respaldan nada.
-- **Un contrato en cada borde.** La entrada se valida con pydantic (3 a 500 caracteres) y todos los errores tienen la forma "codigo" y "mensaje", sin detalles internos.
-- **Secretos solo al ejecutar.** La llave entra por variables de entorno; nunca está en la imagen, en `compose.yaml` ni en git (`buscar_secretos.py` lo comprueba).
-- **Dos contenedores.** La interfaz solo llama a la API: no tiene acceso al modelo ni a la llave.
+El detalle de cada una, con las alternativas descartadas y lo que cuesta, está en `docs/decisiones.md`.
+
+- **RAG sobre `corpus/` con Chroma, sin fine-tuning (D-01).** La información del negocio cambia cada mes y vive en documentos que la dueña puede editar; el índice se actualiza solo con los fragmentos que cambiaron. La comparación con fine-tuning está en `decision_personalizacion.md`.
+- **Modelo `gpt-4.1-mini` en una sola constante, con falla a la vista (D-03).** Reemplaza a `gpt-4.1-nano` (D-02), elegido por costo en el Bloque 9 y dado de baja por OpenAI. Si el proveedor no responde, la API devuelve 503 en vez de inventar.
+- **Si el contexto no alcanza, no se citan fuentes (D-04).** Cuando el modelo declara que no tiene la información, el servicio responde un mensaje estándar con "fuentes" vacía.
+- **Un contrato en cada borde (D-05).** La entrada se valida con pydantic (3 a 500 caracteres) y todos los errores tienen la forma "codigo" y "mensaje", sin detalles internos ni lo que envió el cliente.
+- **Defensa en capas contra la inyección (D-06).** Un filtro descarta los fragmentos con órdenes, el prompt trata el contexto como datos y los registros guardan longitud y huella, nunca el texto.
+- **Dos contenedores y la clave solo al ejecutar (D-07).** La interfaz solo llama a la API y no tiene acceso al modelo ni a la llave; `buscar_secretos.py` comprueba que no quede en archivos, git ni la imagen.
 
 ## Limitaciones
 
-- Los datos del negocio y los pedidos son simulados; no hay conexión con WhatsApp ni con un sistema de pedidos real.
-- El corpus tiene 8 documentos: una pregunta que no está ahí no se puede responder, y el servicio lo dice.
-- La detección de "sin información" busca frases como "no tengo información"; una respuesta evasiva escrita con otras palabras podría pasar con fuentes.
-- El filtro de inyección es una lista de patrones: un ataque redactado de otra forma puede evadirlo (la segunda barrera es el prompt, que trata el contexto como datos).
-- Cada consulta depende de la API de OpenAI: si no responde, el servicio devuelve 503.
+Las que el código declara con evidencia están en `docs/limitaciones.md`, con su origen, su efecto y lo que se decidió:
+
+- **LIM-01. No reconoce una orden escondida redactada con otras palabras.** El filtro lee patrones (ataque A-03 de `ataques.py`); la dueña revisa la respuesta antes de enviarla.
+- **LIM-02. No detecta un precio inventado que el modelo cita con una fuente real** (sonda H-03 de `alucinaciones.py`); precios y plazos se revisan antes de enviar.
+
+Además, por alcance: los datos del negocio y los pedidos son simulados, no hay conexión con WhatsApp, cada consulta depende de la API de OpenAI (sin ella responde 503) y no se probó con varios usuarios a la vez.
 
 ## Estructura del repositorio
 
@@ -233,7 +237,8 @@ Cada actividad, con el archivo que la responde y el commit en que se entregó. D
 | 41 | Registro de la ejecución completa | [`docs/registro_ejecucion.md`](docs/registro_ejecucion.md) | [eb9ca87](https://github.com/EnzoGatica/asistente-pymes-ia/commit/eb9ca87) |
 | 42 | Matriz de pruebas | [`matriz_pruebas.py`](matriz_pruebas.py), [`docs/matriz_pruebas.md`](docs/matriz_pruebas.md) | [36053f7](https://github.com/EnzoGatica/asistente-pymes-ia/commit/36053f7) |
 | 43 | Matriz de riesgos con mitigaciones verificadas | [`riesgos.py`](riesgos.py), [`docs/matriz_riesgos.md`](docs/matriz_riesgos.md), [`docs/registro_alucinaciones.md`](docs/registro_alucinaciones.md) | [c7cbf49](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c7cbf49) |
-| 44 | README técnico completo | este README, [`verificar_readme.py`](verificar_readme.py), [`docs/diario_de_friccion.md`](docs/diario_de_friccion.md) | este commit |
+| 44 | README técnico completo | este README, [`verificar_readme.py`](verificar_readme.py), [`docs/diario_de_friccion.md`](docs/diario_de_friccion.md) | [f8b09d4](https://github.com/EnzoGatica/asistente-pymes-ia/commit/f8b09d4) |
+| 45 | Decisiones de arquitectura y limitaciones | [`docs/decisiones.md`](docs/decisiones.md), [`docs/limitaciones.md`](docs/limitaciones.md), [`verificar_decisiones.py`](verificar_decisiones.py) | este commit |
 
 ## Registro del ensayo de instalación limpia (Gate 1)
 

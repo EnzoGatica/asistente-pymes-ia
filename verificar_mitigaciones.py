@@ -84,7 +84,8 @@ def main():
     filas = []
     for ataque in ATAQUES:
         r = correr_ataque(cliente, ataque)
-        filas.append((r["resultado"], r["id"], ataque["tipo"], ataque.get("hallazgo", "; ".join(r["motivos"]))))
+        detalle = ataque["hallazgo"]["decision"] if "hallazgo" in ataque else "; ".join(r["motivos"])
+        filas.append((r["resultado"], r["id"], ataque["tipo"], detalle))
     filas += contener_alucinaciones(cliente)
     for id_, nombre, prueba in FUGAS:
         ok, evidencia = prueba(cliente)
