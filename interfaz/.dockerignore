@@ -1,0 +1,14 @@
+.git
+.venv
+venv
+.venv-viejo
+__pycache__
+*.pyc
+.env
+tests
+docs
+vectorstore
+logs
+datos
+*.jsonl
+resultados_*

@@ -122,7 +122,7 @@ def pruebas_pasan():
         r = subprocess.run(
             [sys.executable, "-m", "pytest", str(a), "-q", "--tb=no"],
             capture_output=True,
-            text=True,
+            text=True, encoding="utf-8", errors="replace",
         )
         resumen = (r.stdout.strip().splitlines() or [""])[-1]
         pasan = re.search(r"(\d+) passed", resumen)

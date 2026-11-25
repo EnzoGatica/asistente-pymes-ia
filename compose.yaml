@@ -1,0 +1,29 @@
+name: asistente-espiga
+
+services:
+  api:
+    build: .
+    image: asistente-espiga/api:0.3
+    environment:
+      # solo la clave que usa la API; compose la toma de .env al arrancar, nunca queda en la imagen
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ENTORNO: ${ENTORNO:-desarrollo}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./corpus:/app/corpus:ro
+      - indice:/app/vectorstore
+
+  interfaz:
+    build: ./interfaz
+    image: asistente-espiga/interfaz:0.1
+    environment:
+      API_URL: http://api:8000
+    ports:
+      - "8080:8000"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  indice:

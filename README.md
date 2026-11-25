@@ -1,13 +1,181 @@
 # Asistente de consultas para pymes
 
-Asistente de IA generativa para atender los mensajes que los clientes de una pyme (en el ejemplo, una panadería de Tomé) mandan por WhatsApp o Instagram.
+Asistente de IA generativa para atender los mensajes que los clientes de una pyme (en el ejemplo, la Panadería La Espiga de Tomé, ficticia) mandan por WhatsApp o Instagram. Responde con la información oficial del negocio y cita el documento que respalda cada respuesta. Los datos son simulados.
 
-- **Gate 1 (`main.py`):** clasifica el mensaje (pedido, precio, horario, reclamo u otro, con urgencia de 1 a 3) y propone una respuesta breve, indicando si requiere atención humana. Usa prompts de sistema y salida JSON validada.
-- **Gate 2 (`servicio_rag.py`):** responde con los datos reales del negocio mediante RAG sobre `corpus/`, cita la fuente de cada respuesta, filtra intentos de inyección, deja trazas JSON sin datos personales y exige aprobación humana para desplegar una versión nueva del prompt.
+Desde el Módulo 3 funciona como servicio web. Todas las operaciones quedan documentadas en http://127.0.0.1:8000/docs cuando el servicio está arriba:
 
-Modelo: OpenAI `gpt-4.1-mini` desde el 25-11-2026, porque `gpt-4.1-nano` fue dado de baja (ver [decisión de modelo](docs/decision-arquitectura.md)); embeddings `text-embedding-3-small`; vector store Chroma; orquestación con LangChain y LangGraph.
+- `GET /salud`: dice si el servicio está listo, en qué entorno corre y si tiene la clave del modelo.
+- `POST /consultas`: recibe un JSON con el campo "pregunta" y devuelve "respuesta", "fuentes" y "trace_id".
+- `GET /pedidos/{codigo}`: estado de un pedido simulado, con el formato P-0000 (por ejemplo P-1002).
+
+Modelo: OpenAI `gpt-4.1-mini` desde el 25-11-2026, porque `gpt-4.1-nano` fue dado de baja (ver [decisión de modelo](docs/decision-arquitectura.md)); embeddings `text-embedding-3-small`; vector store Chroma; orquestación con LangChain y LangGraph; API con FastAPI; contenedores con Docker Compose. Diseño funcional completo en `docs/ficha_diseno_funcional.md`.
 
 Proyecto de la Especialización en Desarrollo con IA Generativa (Accenture · Skillnest), construido bloque a bloque sobre la plantilla base del programa.
+
+## Requisitos
+
+- Docker con Compose. Comprueba con `docker compose version`.
+- Los puertos 8000 y 8080 libres en tu equipo.
+- Una llave de API de OpenAI ([crear una aquí](https://platform.openai.com/api-keys)).
+- Para desarrollar o probar sin Docker: Python 3.14 (la misma versión que usa la imagen) y Git.
+
+## Instalación
+
+Solo hace falta para ejecutar las pruebas o arrancar el servicio sin Docker. Desde la raíz del repositorio:
+
+```
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements-dev.txt
+```
+
+En Windows, la activación es `.venv\Scripts\activate` (en PowerShell, `.\.venv\Scripts\Activate.ps1`). El archivo `requirements.txt` trae solo lo que usa el servicio, y `requirements-dev.txt` le suma pytest.
+
+## Configuración
+
+1. Copia el archivo de ejemplo (en PowerShell: `Copy-Item .env.example .env`):
+
+```
+cp .env.example .env
+```
+
+2. Completa los valores en `.env`. El archivo `.env` está en `.gitignore` y nunca se sube.
+
+- `OPENAI_API_KEY` (secreto): llave de la API de OpenAI. Si queda vacía, el servicio arranca igual, `/salud` informa "sin clave" y las consultas responden 503.
+- `ENTORNO` (configuración): `desarrollo` o `produccion`. Por omisión, `desarrollo`.
+
+La interfaz recibe la dirección de la API en la variable API_URL, que fija `compose.yaml` (http://api:8000 dentro de la red de Compose); no va en `.env`. Para comprobar la configuración sin mostrar la llave: `python verificar_entorno.py`.
+
+## Cómo arrancar
+
+Con Docker, la API y la interfaz web juntas:
+
+```
+docker compose up -d --build
+```
+
+Cuando termine, la solución queda en estas direcciones:
+
+- API y su documentación: http://127.0.0.1:8000/docs
+- Interfaz web: http://127.0.0.1:8080
+
+Sin Docker, solo la API (con el entorno virtual activo):
+
+```
+uvicorn servicio.main:app --port 8000
+```
+
+### Uso por consola (Gates 1 y 2)
+
+- Gate 1: `python main.py "Hola, ¿tienen marraquetas calientes?"` clasifica el mensaje y propone una respuesta.
+- Gate 2: `python servicio_rag.py "¿Despachan a Penco?"` responde con fuentes. Sin argumentos corre dos consultas de ejemplo y el punto de supervisión humana, que pregunta "¿Aprobar? (s/n)".
+
+La primera consulta crea el índice en `vectorstore/` a partir de `corpus/` (unos segundos); las siguientes lo reutilizan. En Docker el índice vive en el volumen "indice".
+
+## Cómo comprobar que funciona
+
+1. `docker compose ps` debe mostrar `api` e `interfaz` en `healthy`.
+2. Abre http://127.0.0.1:8080, escribe "¿Despachan a Dichato?" y pulsa Preguntar: la respuesta menciona $3.500 y cita `corpus/despacho.md`.
+3. `curl http://127.0.0.1:8000/salud` debe devolver "estado": "ok" y "modelo": "configurado".
+4. `curl http://127.0.0.1:8000/pedidos/P-1002` devuelve el pedido con "estado": "entregado"; con P-9999 responde 404.
+5. Opcional: `python verificar_stack.py` levanta todo, ejecuta siete comprobaciones, apaga y termina con "7 de 7 comprobaciones cumplidas".
+
+## Cómo detener
+
+```
+docker compose down
+```
+
+Para borrar también el índice guardado en el volumen: `docker compose down -v`.
+
+## Pruebas
+
+```
+python -m pytest -q
+```
+
+Las pruebas no llaman a la API de OpenAI: usan embeddings deterministas y un modelo simulado sobre el código real. `tests/test_api.py` recorre la tabla de casos de `casos.py` y `tests/parciales/` prueba cada componente por separado.
+
+Verificadores de cada entrega (los que llaman al modelo real necesitan `.env` con la llave):
+
+| Comando | Qué comprueba |
+|---|---|
+| `python verificar_ficha_completa.py` | Ficha de diseño funcional (Bloques 33 y 34) |
+| `python verificar_servicio.py` | La documentación de la API y los criterios CA-01 a CA-06 contra el modelo real (Bloque 35) |
+| `python cliente_externo.py` | La tabla de casos contra el servicio en marcha (Bloque 36) |
+| `python registrar_pruebas.py` | Escribe `docs/registro_pruebas.md` (Bloque 36) |
+| `python verificar_dockerfile.py` | Siete reglas del Dockerfile; con `interfaz/Dockerfile` revisa el de la interfaz (Bloque 37) |
+| `python verificar_imagen.py asistente-espiga:0.3` | La imagen corre sin root, sana y pasa los 14 casos (Bloque 37) |
+| `python buscar_secretos.py asistente-espiga/api:0.3` | Ningún secreto en archivos, git ni la imagen (Bloque 38) |
+| `python verificar_stack.py` | El stack de Compose completo (Bloque 38) |
+| `python verificar_entrega.py` | Composición, README, variables, puertos, verificación cruzada y secretos (Bloque 38) |
+| `python verificar_parciales.py` | Plan y pruebas parciales de `docs/pruebas_parciales.md` (Bloque 39) |
+
+### Scripts por bloque (Módulos 1 y 2)
+
+| Comando | Bloque | Qué hace |
+|---|---|---|
+| `python src/consumir_openai.py` | 5-8 | Prueba mínima de conexión: una pregunta y su costo |
+| `python src/comparar_modelos.py` | 9 | Latencia y costo de `gpt-4.1-nano` vs `gpt-4.1-mini` |
+| `python prompts/test_consistencia.py` | 10 | Corre cada prompt del banco 3 veces y guarda el registro |
+| `python src/cliente.py` | 12-13 | Cliente modular con reintento, backoff y registro de costo |
+| `python src/comparar_crudo_vs_procesado.py` | 15 | Coincidencia antes y después del pipeline de texto |
+| `python src/evaluar_salidas.py` | 16-17 | 20 respuestas reales con precisión, cobertura y F1 |
+| `python src/cadena_tres_pasos.py` | 18 | Chain clasificar → redactar → revisar tono |
+| `python src/enrutamiento.py` | 19-20 | Chain con enrutamiento por categoría y fallbacks |
+| `python src/agente.py` | 21-23 | Agente con 4 herramientas, memoria por sesión y aprobación de reembolsos |
+| `python src/indexar_corpus.py` | 24 | Indexa `corpus/` en Chroma desde cero |
+| `python src/recuperacion.py` | 26 | Recuperación con prompt dinámico y citas |
+| `python src/evaluacion_recuperacion.py [k]` | 27 | Precisión@k y recall@k sobre 12 preguntas etiquetadas |
+| `python src/registro_rag.py` | 28 | Latencia por etapa, tokens y costo del flujo RAG |
+| `python src/dataset_tuning.py` | 29 | Dataset validado para PEFT (no lo envía a entrenar) |
+| `python decision.py` | 30 | Método de decisión RAG / fine-tuning / PEFT |
+| `python src/logging_rag.py` | 31 | Demo de logging con trace_id y filtro de inyección |
+| `python src/registro_prompts.py` | 32 | Versiones del prompt con huella y diff |
+| `python src/grafo_supervision.py` | 32 | Punto de supervisión: aprobación y rechazo |
+| `python src/matriz_riesgos.py` | 32 | Matriz de riesgos con puntaje y supervisión |
+| `python rubrica_gate2.py` | Gate 2 | Autoevaluación contra la rúbrica |
+
+## Decisiones técnicas
+
+- **Modelo `gpt-4.1-mini` de OpenAI.** Se eligió `gpt-4.1-nano` por costo (Bloque 9) y se pasó al respaldo previsto cuando OpenAI lo dio de baja. Detalle en `docs/decision-arquitectura.md`.
+- **RAG sobre `corpus/` con Chroma.** La información del negocio cambia (precios, horarios) y vive en documentos que la dueña puede editar; el índice se actualiza solo con los fragmentos que cambiaron. La comparación con fine-tuning está en `decision_personalizacion.md`.
+- **Si el contexto no alcanza, no se citan fuentes.** Cuando el modelo declara que no tiene la información, el servicio responde un mensaje estándar con "fuentes" vacía en vez de pegar documentos que no respaldan nada.
+- **Un contrato en cada borde.** La entrada se valida con pydantic (3 a 500 caracteres) y todos los errores tienen la forma "codigo" y "mensaje", sin detalles internos.
+- **Secretos solo al ejecutar.** La llave entra por variables de entorno; nunca está en la imagen, en `compose.yaml` ni en git (`buscar_secretos.py` lo comprueba).
+- **Dos contenedores.** La interfaz solo llama a la API: no tiene acceso al modelo ni a la llave.
+
+## Limitaciones
+
+- Los datos del negocio y los pedidos son simulados; no hay conexión con WhatsApp ni con un sistema de pedidos real.
+- El corpus tiene 8 documentos: una pregunta que no está ahí no se puede responder, y el servicio lo dice.
+- La detección de "sin información" busca frases como "no tengo información"; una respuesta evasiva escrita con otras palabras podría pasar con fuentes.
+- El filtro de inyección es una lista de patrones: un ataque redactado de otra forma puede evadirlo (la segunda barrera es el prompt, que trata el contexto como datos).
+- Cada consulta depende de la API de OpenAI: si no responde, el servicio devuelve 503.
+
+## Estructura del repositorio
+
+- `servicio/`: la API FastAPI (rutas, esquemas, errores, configuración y el puente con `servicio_rag.py`).
+- `interfaz/`: la página web mínima y su contenedor.
+- `src/`: componentes de los Módulos 1 y 2 (cliente, RAG, logging, gobernanza).
+- `corpus/`: los 8 documentos del negocio.
+- `prompts/`: banco de prompts y registro de versiones.
+- `tests/`: pruebas de la API y de los Gates; `tests/parciales/` prueba cada componente.
+- `docs/`: ficha de diseño, diagramas, decisiones, registros y evidencias de cada bloque.
+- `compose.yaml` y `Dockerfile`: cómo se construye y se levanta.
+- Los archivos `verificar_*.py`: comprobaciones ejecutables de cada entrega.
+
+## Problemas frecuentes
+
+- **Bind for 0.0.0.0:8000 failed: port is already allocated.** Otro programa usa el puerto (por ejemplo un uvicorn local). Detenlo o cambia el número de la izquierda en "ports" de `compose.yaml`.
+- **`/salud` dice "sin clave" o las consultas responden 503.** Falta `OPENAI_API_KEY` en `.env`. Complétala y recrea los contenedores con `docker compose up -d`.
+- **La interfaz responde 502.** La API no está disponible: revisa `docker compose logs api`.
+- **La primera consulta tarda varios segundos.** Está creando el índice; las siguientes son más rápidas.
+- **En PowerShell no se puede activar el entorno virtual.** Ejecuta `Set-ExecutionPolicy -Scope Process Bypass` o usa el Símbolo del sistema.
+
+## Verificación cruzada
+
+La revisión de un par que siga solo este README se registrará en docs/verificacion_cruzada.md (pendiente).
 
 ## Entregas por bloque
 
@@ -45,155 +213,6 @@ Cada actividad, con el archivo que la responde y el commit en que se entregó.
 | 32 | Matriz de riesgos y versionado de prompts | [`src/matriz_riesgos.py`](src/matriz_riesgos.py), [`prompts/registro_prompts.json`](prompts/registro_prompts.json), [`docs/evidencia_gobernanza.txt`](docs/evidencia_gobernanza.txt) | [95afb94](https://github.com/EnzoGatica/asistente-pymes-ia/commit/95afb94) |
 | S1 | **Gate 2** - Integración y orquestación | [`servicio_rag.py`](servicio_rag.py), [`tests/test_gate2.py`](tests/test_gate2.py), [`rubrica_gate2.py`](rubrica_gate2.py) | [c2dd433](https://github.com/EnzoGatica/asistente-pymes-ia/commit/c2dd433) |
 
-## Requisitos
-
-- Python 3.10 o superior (probado con 3.14)
-- Git
-- Una llave de API de OpenAI ([crear una aquí](https://platform.openai.com/api-keys))
-
-## Instalación
-
-**Windows (PowerShell)**
-
-```powershell
-git clone https://github.com/EnzoGatica/asistente-pymes-ia.git
-cd asistente-pymes-ia
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-Copy-Item .env.example .env
-```
-
-**macOS / Linux / WSL**
-
-```bash
-git clone https://github.com/EnzoGatica/asistente-pymes-ia.git
-cd asistente-pymes-ia
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-```
-
-Luego abre el archivo `.env` y reemplaza `tu_llave_aqui` por tu llave real:
-
-```
-OPENAI_API_KEY=sk-...
-```
-
-El `.env` está en `.gitignore`: nunca se sube al repositorio. Para comprobar que todo quedó bien: `python verificar_entorno.py` (no imprime la llave).
-
-## Ejecución
-
-Con el entorno virtual activo, desde la raíz del proyecto (en macOS/Linux usa `python3`).
-
-### Gate 1: clasificar y proponer respuesta
-
-```bash
-python main.py "Hola, ¿tienen marraquetas calientes? ¿Cuánto sale el kilo?"
-```
-
-Si no pasas el mensaje como argumento, el programa lo pide por consola. Salida esperada (el texto varía porque lo genera el modelo):
-
-```
-Categoría: precio (urgencia 2/3)
-Respuesta del modelo: ¡Hola! Tenemos marraquetas en el día, pero el precio del kilo requiere atención humana.
-Requiere atención humana: sí
-Costo total: USD 0.0000516
-Proceso terminado sin errores.
-```
-
-Si algo falla (llave inválida, sin conexión, mensaje vacío), el programa muestra `No se pudo completar la operación: <motivo>` en vez de un traceback.
-
-### Gate 2: servicio RAG con fuentes citadas
-
-```bash
-python servicio_rag.py
-```
-
-Sin argumentos corre dos consultas de ejemplo y después el **punto de supervisión humana**: el despliegue de la versión nueva del prompt se pausa y pregunta `¿Aprobar? (s/n)`. Para una consulta puntual (sin el paso de supervisión):
-
-```bash
-python servicio_rag.py "¿Despachan a Penco?"
-```
-
-La primera corrida crea el índice en `vectorstore/` a partir de `corpus/` (unos segundos). Las siguientes lo reutilizan y solo reindexan los chunks que cambiaron (`indice_reutilizado` / `indice_actualizado` en el log). Para reconstruirlo desde cero: `python src/indexar_corpus.py`.
-
-Salida esperada (resumida; los logs JSON salen por consola y en `logs/servicio_rag.log`):
-
-```
-{"msg": "consulta_recibida", "trace_id": "trace-b2667016", "pregunta_len": 54, "pregunta_huella": "9f8dbca3"}
-{"msg": "documentos_recuperados", "trace_id": "trace-b2667016", "n": 3, "fuentes": ["despacho.md", ...]}
-{"msg": "consumo_llm", "trace_id": "trace-b2667016", "input_tokens": 415, "output_tokens": 19, "costo_usd": 4.91e-05}
-Respuesta final: No, no despachamos a Penco. Puedes retirar en nuestro local si prefieres. [Fuentes: despacho.md, ...]
-Punto de supervisión: aprobar nueva version de prompt en produccion (actual 849809fdf663 -> propuesta 63e87a2e20b7)
-¿Aprobar? (s/n): s
-version 63e87a2e20b7 activada
-Proceso terminado sin errores.
-```
-
-### Pruebas
-
-```bash
-python -m pytest -v
-```
-
-70 pruebas, sin llamar a la API (todo con mocks, embeddings deterministas y modelo simulado). `tests/test_gate2.py` verifica los cuatro criterios no compensables del Gate 2.
-
-### Scripts por bloque
-
-| Comando | Bloque | Qué hace |
-|---|---|---|
-| `python src/consumir_openai.py` | 5-8 | Prueba mínima de conexión: una pregunta y su costo |
-| `python src/comparar_modelos.py` | 9 | Latencia y costo de `gpt-4.1-nano` vs `gpt-4.1-mini` |
-| `python prompts/test_consistencia.py` | 10 | Corre cada prompt del banco 3 veces y guarda el registro |
-| `python src/cliente.py` | 12-13 | Cliente modular con reintento, backoff y registro de costo |
-| `python src/comparar_crudo_vs_procesado.py` | 15 | Coincidencia antes y después del pipeline de texto |
-| `python src/evaluar_salidas.py` | 16-17 | 20 respuestas reales con precisión, cobertura y F1 |
-| `python src/cadena_tres_pasos.py` | 18 | Chain clasificar → redactar → revisar tono |
-| `python src/enrutamiento.py` | 19-20 | Chain con enrutamiento por categoría y fallbacks |
-| `python src/agente.py` | 21-23 | Agente con 4 herramientas, memoria por sesión y aprobación de reembolsos |
-| `python src/indexar_corpus.py` | 24 | Indexa `corpus/` en Chroma desde cero |
-| `python src/recuperacion.py` | 26 | Recuperación con prompt dinámico y citas |
-| `python src/evaluacion_recuperacion.py [k]` | 27 | Precisión@k y recall@k sobre 12 preguntas etiquetadas |
-| `python src/registro_rag.py` | 28 | Latencia por etapa, tokens y costo del flujo RAG |
-| `python src/dataset_tuning.py` | 29 | Dataset validado para PEFT (no lo envía a entrenar) |
-| `python decision.py` | 30 | Método de decisión RAG / fine-tuning / PEFT |
-| `python src/logging_rag.py` | 31 | Demo de logging con trace_id y filtro de inyección |
-| `python src/registro_prompts.py` | 32 | Versiones del prompt con huella y diff |
-| `python src/grafo_supervision.py` | 32 | Punto de supervisión: aprobación y rechazo |
-| `python src/matriz_riesgos.py` | 32 | Matriz de riesgos con puntaje y supervisión |
-| `python rubrica_gate2.py` | Gate 2 | Autoevaluación contra la rúbrica |
-
-## Estructura
-
-```
-main.py                    Gate 1: clasifica y propone respuesta
-servicio_rag.py            Gate 2: servicio RAG integrado (índice incremental, citas, trazas, supervisión)
-corpus/                    8 documentos del negocio de ejemplo (fuente del RAG)
-src/consumir_openai.py     armar_peticion, enviar_peticion, extraer_texto, parsear_respuesta_json, calcular_costo
-src/cliente.py             Cliente modular: consultar_modelo con reintento, backoff y registro de costo
-src/pipeline_texto.py      Limpieza, tokenización y métricas de precisión/cobertura/F1
-src/cadena_tres_pasos.py, src/enrutamiento.py   Orquestación con LangChain
-src/agente.py              Agente con herramientas, memoria, aprobación humana y trazas
-src/indexar_corpus.py, src/recuperacion.py, src/evaluacion_recuperacion.py, src/registro_rag.py   RAG
-src/logging_rag.py         Logging JSON con trace_id, consumo y filtro de inyección
-src/registro_prompts.py, src/grafo_supervision.py, src/matriz_riesgos.py   Gobernanza
-prompts/                   Banco de prompts, consistencia y registro de versiones
-tests/                     70 pruebas con pytest
-docs/                      Diagramas, decisiones, límites y evidencias de cada bloque
-vectorstore/, logs/        Generados al correr (fuera de Git)
-```
-
-## Documentación
-
-- [Diagrama de arquitectura](docs/diagrama_arquitectura.png) y [decisión de modelo](docs/decision-arquitectura.md)
-- [Límites de la métrica de evaluación](docs/limites_metrica.md)
-- [Límites de autonomía del agente](docs/limites_autonomia_agente.md)
-- [Decisión de personalización](decision_personalizacion.md)
-- [Evaluación de la recuperación](resultados_evaluacion.txt) y [registros de latencia y costo](registros_latencia_costo.jsonl)
-- [Matriz de riesgos y supervisión](docs/evidencia_gobernanza.txt)
-
 ## Registro del ensayo de instalación limpia (Gate 1)
 
 - Fecha: 2026-10-22
@@ -210,3 +229,4 @@ vectorstore/, logs/        Generados al correr (fuera de Git)
 - Pruebas: 70 passed. Servicio: índice creado desde cero en la primera corrida (`indice_creado`), dos respuestas con fuente citada, supervisión pausada y rechazada al responder "n", "Proceso terminado sin errores.", exit 0.
 - Hallazgo corregido antes de este ensayo: `cargar_indice` fallaba al crear el índice desde cero (`delete` con lista vacía en Chroma). Lo detectó `tests/test_gate2.py` y se corrigió; el ensayo confirma que un clon nuevo ya no falla.
 - Seguridad: `grep ana.perez logs/servicio_rag.log` sin resultados; `git status` limpio; `git ls-files` solo muestra `.env.example` (ni `.env`, ni `vectorstore/`, ni logs).
+

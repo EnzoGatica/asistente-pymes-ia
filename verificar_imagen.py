@@ -15,7 +15,7 @@ BASE = f"http://127.0.0.1:{PUERTO}"
 
 def docker(*args):
     r = subprocess.run(
-        ["docker", *args], capture_output=True, text=True
+        ["docker", *args], capture_output=True, text=True, encoding="utf-8", errors="replace"
     )
     return r.returncode, (r.stdout + r.stderr).strip()
 

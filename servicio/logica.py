@@ -29,7 +29,10 @@ def _obtener_motor():
         from consumir_openai import MODELO
         from indexar_corpus import crear_embeddings
 
+        from servicio import config
+
         load_dotenv(RAIZ / ".env")
+        config.clave_modelo()  # sin clave falla aquí, con un mensaje claro, y no a mitad de la indexación
         vectorstore, estado = servicio_rag.cargar_indice(crear_embeddings())
         servicio_rag.evento("indice_cargado", **estado)
         _motor = (vectorstore, ChatOpenAI(model=MODELO, temperature=0))

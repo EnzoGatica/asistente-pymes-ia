@@ -22,3 +22,6 @@ Thumbs.db
 
 # Índice vectorial generado (se reconstruye con python src/indexar_corpus.py)
 vectorstore/
+
+# Cachés de pruebas
+.pytest_cache/

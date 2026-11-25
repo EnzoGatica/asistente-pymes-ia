@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import FastAPI
 from fastapi import Path as Ruta
 
-from servicio import logica
+from servicio import config, logica
 from servicio.errores import registrar
 from servicio.esquemas import Consulta, Error, EstadoPedido, Respuesta
 
@@ -19,7 +19,8 @@ ENTRADA_INVALIDA = {422: {"model": Error, "description": "La entrada no cumple e
 
 @app.get("/salud", tags=["sistema"], summary="Comprobar el servicio")
 def salud():
-    return {"estado": "ok"}
+    modelo = "configurado" if config.modelo_configurado() else "sin clave"
+    return {"estado": "ok", "entorno": config.entorno(), "modelo": modelo}
 
 
 @app.post(

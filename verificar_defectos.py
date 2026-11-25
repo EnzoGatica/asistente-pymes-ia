@@ -38,7 +38,7 @@ def main(archivo, viejo, nuevo, prueba):
             [sys.executable, "-m", "pytest", prueba, "-q", "--tb=no"],
             cwd=copia,
             capture_output=True,
-            text=True,
+            text=True, encoding="utf-8", errors="replace",
         )
     fallan = re.findall(r"^FAILED (\S+)", r.stdout, re.MULTILINE)
     print(f"defecto en {archivo}: {viejo!r} -> {nuevo!r}")
