@@ -5,7 +5,7 @@ Asistente de IA generativa para atender los mensajes que los clientes de una pym
 - **Gate 1 (`main.py`):** clasifica el mensaje (pedido, precio, horario, reclamo u otro, con urgencia de 1 a 3) y propone una respuesta breve, indicando si requiere atención humana. Usa prompts de sistema y salida JSON validada.
 - **Gate 2 (`servicio_rag.py`):** responde con los datos reales del negocio mediante RAG sobre `corpus/`, cita la fuente de cada respuesta, filtra intentos de inyección, deja trazas JSON sin datos personales y exige aprobación humana para desplegar una versión nueva del prompt.
 
-Modelo: OpenAI `gpt-4.1-nano` (ver [decisión de modelo](docs/decision-arquitectura.md)); embeddings `text-embedding-3-small`; vector store Chroma; orquestación con LangChain y LangGraph.
+Modelo: OpenAI `gpt-4.1-mini` desde el 25-11-2026, porque `gpt-4.1-nano` fue dado de baja (ver [decisión de modelo](docs/decision-arquitectura.md)); embeddings `text-embedding-3-small`; vector store Chroma; orquestación con LangChain y LangGraph.
 
 Proyecto de la Especialización en Desarrollo con IA Generativa (Accenture · Skillnest), construido bloque a bloque sobre la plantilla base del programa.
 

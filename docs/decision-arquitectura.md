@@ -4,6 +4,8 @@
 - **Estado:** aceptada
 - **Autor:** Enzo Gatica
 
+> **Actualización 25-11-2026:** OpenAI dio de baja `gpt-4.1-nano` (la API responde 404 "has been deprecated"). Se activó la alternativa de respaldo prevista abajo: `MODELO = "gpt-4.1-mini"` en `src/consumir_openai.py`. El costo por petición sube a ~USD 0,08 por cada 1.000 consultas, que sigue siendo bajo para el volumen de una pyme. El resto de esta decisión se conserva como registro de la elección original.
+
 ## Contexto
 
 La miniaplicación es un asistente que redacta respuestas a consultas de clientes de pymes (panaderías, ferreterías, cabañas) de Tomé y Dichato que llegan por WhatsApp o Instagram. Las respuestas son cortas (una a tres frases), el volumen esperado es de cientos a pocos miles de consultas al mes por negocio, y el dueño del negocio revisa el texto antes de enviarlo.

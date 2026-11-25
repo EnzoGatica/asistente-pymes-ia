@@ -21,6 +21,11 @@ from registro_prompts import PROMPT_ACTUAL  # noqa: E402
 
 SIN_CONTEXTO = "No tengo información suficiente y verificada para responder esto; te contactará alguien del equipo."
 ERROR_SERVICIO = "No pudimos procesar tu mensaje en este momento. Intenta de nuevo en unos minutos."
+# El modelo declara que el contexto no alcanza: sin esto, asegurar_cita le pegaba fuentes que no respaldan nada.
+DECLARA_SIN_INFO = re.compile(
+    r"\bno\s+(?:tengo|tenemos|cuento|contamos|dispongo|disponemos)\s+(?:de\s+|con\s+)?(?:la\s+|esa\s+)?informaci[oó]n",
+    re.IGNORECASE,
+)
 
 
 def cargar_indice(embeddings, persist_directory=PERSIST_DIRECTORY, carpeta_corpus=None):
@@ -70,6 +75,9 @@ def responder(pregunta, vectorstore, chat_model, k=3):
             prompt = PROMPT_ACTUAL["texto"].format(contexto=formatear_contexto(limpios), pregunta=pregunta)
             mensaje = chat_model.invoke(prompt)
             auditoria.append(registrar_consumo(mensaje))
+            if DECLARA_SIN_INFO.search(mensaje.content):
+                auditoria.append(evento("sin_cobertura"))
+                return {"trace_id": trace_id, "respuesta": SIN_CONTEXTO, "fuentes": [], "auditoria": auditoria}
             fuentes = sorted({d.metadata["fuente"] for d in limpios})
             respuesta = asegurar_cita(mensaje.content, fuentes)
             auditoria.append(evento("respuesta_generada", respuesta_len=len(respuesta), prompt_huella=PROMPT_ACTUAL["huella"]))

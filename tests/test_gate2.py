@@ -117,3 +117,10 @@ def test_documento_con_inyeccion_no_llega_al_prompt(entorno):
 
 def test_main_sin_api_no_se_ejecuta_al_importar():
     assert callable(servicio_rag.main)
+
+
+def test_6_si_el_modelo_declara_que_no_tiene_informacion_no_cita_fuentes(entorno):
+    resultado = responder("¿Cuál es la clave del wifi?", entorno["vectorstore"],
+                          modelo("Lo siento, no contamos con información sobre la clave del wifi [horarios.md]."))
+    assert resultado["fuentes"] == []
+    assert resultado["respuesta"] == servicio_rag.SIN_CONTEXTO

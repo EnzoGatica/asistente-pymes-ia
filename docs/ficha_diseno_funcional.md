@@ -22,7 +22,7 @@ Fuera de alcance: RF-05 (requiere la cuenta real de WhatsApp Business del negoci
 
 ## 3. Arquitectura de la solución
 Diagrama: docs/diagrama_arquitectura_m3.png (el diagrama del Bloque 8, docs/diagrama_arquitectura.png, sigue describiendo la miniaplicación del Gate 1).
-- Modelo: OpenAI gpt-4.1-nano mediante API (embeddings text-embedding-3-small), con la clave OPENAI_API_KEY en el archivo .env.
+- Modelo: OpenAI gpt-4.1-mini mediante API (embeddings text-embedding-3-small), con la clave OPENAI_API_KEY en el archivo .env.
 - Vector store: Chroma persistido en la carpeta vectorstore/, indexado desde corpus/.
 - Orquestación: LangChain para recuperación, filtro de inyección y respuesta con citas; LangGraph para la aprobación humana de versiones del prompt.
 - Exposición: FastAPI con los endpoints POST /consultas y GET /pedidos/{codigo}.
@@ -31,9 +31,9 @@ Diagrama: docs/diagrama_arquitectura_m3.png (el diagrama del Bloque 8, docs/diag
 ## 4. Criterios de aceptación
 - CA-01 (RF-01): Al enviar {"pregunta": "¿Despachan a Dichato?"} a POST /consultas, la respuesta HTTP es 200 y el JSON trae los campos "respuesta", "fuentes" y "trace_id".
 - CA-02 (RF-02): Para esa misma pregunta, "fuentes" contiene "despacho.md" y la respuesta menciona el valor de $3.500 que figura en corpus/despacho.md.
-- CA-03 (RF-02): Ante la pregunta "¿Venden cerveza artesanal?", que corpus/ no cubre, la respuesta contiene "No tengo información suficiente" y "fuentes" va vacía.
+- CA-03 (RF-02): Ante la pregunta "¿Cuál es la clave del wifi del local?", que corpus/ no cubre, la respuesta contiene "No tengo información suficiente" y "fuentes" va vacía.
 - CA-04 (RF-03): GET /pedidos/P-1002 responde 200 con "estado": "entregado".
-- CA-05 (RF-03): GET /pedidos/P-9999 responde 404 y el campo "detail" dice que el pedido no existe.
+- CA-05 (RF-03): GET /pedidos/P-9999 responde 404 con "codigo": "no_encontrado" y un "mensaje" que dice que el pedido no existe.
 - CA-06 (RF-01): POST /consultas con {"pregunta": ""} responde 422 y no se registra ningún evento "consumo_llm" para esa consulta.
 - CA-07 (RNF-01): En las 10 consultas de prueba de tests/consultas_prueba.json, al menos 9 responden en menos de 5 segundos.
 - CA-08 (RNF-02): Tras ejecutar las 10 consultas de prueba, ninguna línea de logs/servicio_rag.log contiene el texto completo de una de esas preguntas.

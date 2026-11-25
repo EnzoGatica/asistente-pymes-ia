@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 URL_CHAT = "https://api.openai.com/v1/chat/completions"
-MODELO = "gpt-4.1-nano"
+MODELO = "gpt-4.1-mini"  # gpt-4.1-nano fue dado de baja por OpenAI (ver docs/decision-arquitectura.md)
 
 # USD por 1 millón de tokens (https://openai.com/api/pricing, revisado el 22-10-2026)
 PRECIOS = {
