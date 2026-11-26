@@ -3,8 +3,8 @@
 
 | Dato | Valor |
 |---|---|
-| Fecha | 2026-11-25 19:52 |
-| Commit del código | 655a855 (sin cambios) |
+| Fecha | 2026-11-26 10:12 |
+| Commit del código | 4262e55 (sin cambios) |
 | Destinos | API http://127.0.0.1:8000 e interfaz http://127.0.0.1:8080 |
 
 Escenarios: 14 de 14 cumplidos
