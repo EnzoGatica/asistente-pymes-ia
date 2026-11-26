@@ -21,7 +21,7 @@ Proyecto de la Especialización en Desarrollo con IA Generativa (Accenture · Sk
 
 ## Instalación
 
-Solo hace falta para ejecutar las pruebas o arrancar el servicio sin Docker. Desde la raíz del repositorio:
+Hace falta para ejecutar las pruebas, los verificadores (por ejemplo `python verificar_stack.py`) o el servicio sin Docker; para solo arrancar con Docker no se necesita. Desde la raíz del repositorio:
 
 ```
 python -m venv .venv
@@ -75,10 +75,10 @@ La primera consulta crea el índice en `vectorstore/` a partir de `corpus/` (uno
 ## Cómo comprobar que funciona
 
 1. `docker compose ps` debe mostrar `api` e `interfaz` en `healthy`.
-2. Abre http://127.0.0.1:8080, escribe "¿Despachan a Dichato?" y pulsa Preguntar: la respuesta menciona $3.500 y cita `corpus/despacho.md`.
+2. Abre http://127.0.0.1:8080, escribe "¿Despachan a Dichato?" y pulsa Preguntar: la respuesta menciona $3.500 y en "fuentes" aparece "despacho.md" (el archivo `corpus/despacho.md`).
 3. `curl http://127.0.0.1:8000/salud` debe devolver "estado": "ok" y "modelo": "configurado".
 4. `curl http://127.0.0.1:8000/pedidos/P-1002` devuelve el pedido con "estado": "entregado"; con P-9999 responde 404.
-5. Opcional: `python verificar_stack.py` levanta todo, ejecuta siete comprobaciones, apaga y termina con "7 de 7 comprobaciones cumplidas".
+5. Opcional, con el entorno virtual de "Instalación" activo: `python verificar_stack.py` levanta todo, ejecuta siete comprobaciones, apaga y termina con "7 de 7 comprobaciones cumplidas".
 
 ## Cómo detener
 
