@@ -46,4 +46,5 @@ Margen de imprevistos: 4 h
 - H2 (1 h): Respuestas con fuentes desde el índice Chroma persistido y fuentes vacías cuando corpus/ no cubre la pregunta. Cubre: RF-02. Se comprueba con: CA-02, CA-03.
 - H3 (1 h): Endpoint GET /pedidos/{codigo} con los pedidos simulados de src/negocio.py. Cubre: RF-03. Se comprueba con: CA-04, CA-05.
 - H4 (3 h): Servicio empaquetado con Dockerfile y docker compose. Cubre: RNF-03. Se comprueba con: CA-09.
-- H5 (6 h): Pruebas, documentación y ensayo de la defensa. Cubre: RNF-01, RNF-02. Se comprueba con: CA-07, CA-08.
+- H5 (3 h): Pruebas de latencia y de registros con las 10 consultas de tests/consultas_prueba.json. Cubre: RNF-01, RNF-02. Se comprueba con: CA-07, CA-08.
+- H6 (3 h): README de despliegue y ensayo de la defensa. Cubre: RNF-03. Se comprueba con: CA-09.
